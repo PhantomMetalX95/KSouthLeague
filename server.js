@@ -9,6 +9,8 @@ const app = express();
 const PASS = process.env.ADMIN_PASSWORD || "";
 const SECRET = process.env.SESSION_SECRET || PASS;
 const DAY = 24 * 3600 * 1000;
+/* refuse to unlock admin with a missing, short or placeholder password */
+const WEAK = !PASS || PASS.length < 8 || PASS === "change-me-to-something-long";
 const dir = path.dirname(fileURLToPath(import.meta.url));
 
 app.disable("x-powered-by");
@@ -24,7 +26,7 @@ function limited(ip) {
   return t.length >= 10;
 }
 app.post("/api/login", (req, res) => {
-  if (!PASS) return res.status(503).json({ error: "ADMIN_PASSWORD isn't set on the server" });
+  if (WEAK) return res.status(503).json({ error: "Admin is locked: set ADMIN_PASSWORD on the server (8+ characters, not the example value)" });
   if (limited(req.ip)) return res.status(429).json({ error: "Too many attempts. Try again in 15 minutes." });
   const given = String(req.body?.password ?? "");
   if (!same(crypto.createHash("sha256").update(given).digest("hex"), crypto.createHash("sha256").update(PASS).digest("hex"))) {
@@ -36,9 +38,11 @@ app.post("/api/login", (req, res) => {
 });
 function admin(req, res, next) {
   const [exp, sig] = String(req.get("authorization") || "").replace(/^Bearer /, "").split(".");
-  if (PASS && exp && sig && +exp > Date.now() && same(sig, sign(exp))) return next();
+  if (!WEAK && exp && sig && +exp > Date.now() && same(sig, sign(exp))) return next();
   res.status(401).json({ error: "Please sign in again" });
 }
+
+app.get("/api/me", admin, (_req, res) => res.json({ ok: true }));
 
 /* --- public read --- */
 app.get("/api/data", async (_req, res, next) => {
@@ -78,5 +82,5 @@ await init();
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`K South League running on http://localhost:${port}`);
-  if (!PASS) console.warn("ADMIN_PASSWORD is not set: the admin page can't be unlocked.");
+  if (WEAK) console.warn("ADMIN_PASSWORD is missing, too short or still the example value: the admin page stays locked.");
 });

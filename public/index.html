@@ -202,7 +202,7 @@ footer a{color:#fff;margin-right:16px;font-weight:700}
 </div></nav>
 <div id="app"><div class="w" style="padding:90px 20px;color:var(--mut)">Loading...</div></div>
 <footer><div class="w"><div class="fb"><span class="logo" role="img" aria-label="K South League crest"></span><div><span class="d" style="font-size:26px;color:#fff;display:block">K SOUTH LEAGUE</span>Embakasi West. Est. 2024.</div></div>
-<div><a href="#/matches">Matches</a><a href="#/table">Table</a><a href="#/news">News</a><a href="#/teams">Teams</a><a href="#/admin" style="color:#7fd4ff">Admin</a></div></div></footer>
+<div><a href="#/matches">Matches</a><a href="#/table">Table</a><a href="#/news">News</a><a href="#/teams">Teams</a><a href="#/admin" id="adl" style="color:#7fd4ff" hidden>Admin</a></div></div></footer>
 
 <script>
 /* ===== Starter data: only used in demo mode (when there is no backend). With the backend running, everything comes from Turso. ===== */
@@ -220,10 +220,10 @@ DEF.players=DEF.teams.flatMap((t,i)=>SHAPE.map(([pos,num],j)=>({id:t.id+"p"+j,te
 let D={teams:[],fixtures:[],news:[],players:[],site:DEF.site},MODE="demo",TOKEN=null,MV="fx",MF="",AT="fixtures",EID=null,PT=null;
 try{TOKEN=localStorage.getItem("ksl_tok")}catch(e){}
 const setTok=t=>{TOKEN=t;try{t?localStorage.setItem("ksl_tok",t):localStorage.removeItem("ksl_tok")}catch(e){}};
-const canEdit=()=>MODE==="demo"||!!TOKEN;
+const canEdit=()=>MODE==="live"&&!!TOKEN;
 const $=s=>document.querySelector(s),esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 async function api(m,p,b){const r=await fetch("/api"+p,{method:m,headers:{"Content-Type":"application/json",...(TOKEN?{Authorization:"Bearer "+TOKEN}:{})},body:b?JSON.stringify(b):undefined});let j={};try{j=await r.json()}catch(e){}
- if(r.status===401&&TOKEN){setTok(null);changed()}if(!r.ok)throw new Error(j.error||"Request failed ("+r.status+")");return j}
+ if(r.status===401&&TOKEN){setTok(null);changed()}if(!r.ok)throw Object.assign(new Error(j.error||"Request failed ("+r.status+")"),{status:r.status});return j}
 async function put(col,id,o){if(MODE==="live")await api("PUT","/"+col+"/"+encodeURIComponent(id),o);const i=D[col].findIndex(x=>x.id===id),row={...o,id};i>=0?D[col][i]=row:D[col].push(row)}
 async function del(col,id){if(MODE==="live")await api("DELETE","/"+col+"/"+encodeURIComponent(id));D[col]=D[col].filter(x=>x.id!==id)}
 async function putSite(o){if(MODE==="live")await api("PUT","/site",o);D.site={...DEF.site,...o}}
@@ -273,9 +273,11 @@ team(id){const t=D.teams.find(x=>x.id===id);if(!t)return P.teams();const S=stand
  const th=t.theme?"th-"+t.theme:"";return banner(t.short,t.name,sub,`<a href="#/teams">Teams</a> / ${esc(t.name)}`,t.theme?"":t.c,th,(t.theme==="civo"?"":"")+(t.badge?`<img class="tbadge" src="${esc(t.badge)}" alt="${esc(t.name)} crest">`:""))+`<div class="${th?"thw "+th:""}" style="--c:${esc(t.c)}"><main class="w"><section><div class="stats">${[["Position",S.indexOf(s)+1],["Played",s.p],["Won",s.w],["Drawn",s.d],["Lost",s.l],["Goal diff",gd(s)],["Points",s.pts]].map(x=>`<div><b>${x[1]}</b><span>${x[0]}</span></div>`).join("")}</div></section>
  <section><div class="hd"><h2>Squad</h2></div>${squad(t)}</section>
  <section><div class="hd"><h2>Fixtures</h2></div><div class="list">${grouped(upcoming().filter(mine))}</div></section><section><div class="hd"><h2>Results</h2></div><div class="list">${grouped(results().filter(mine))}</div></section></main></div>`},
+down(){return banner("OFFLINE","Back shortly","The league site can't reach its database right now. Please try again in a minute.")+`<main class="w"><section><a class="btn" href="#/" onclick="location.reload();return false">Try again</a></section></main>`},
 admin(){const head=banner("ADMIN","Admin","Add fixtures, enter scores, write news, update teams and build squads.");
+ if(MODE!=="live")return head+`<main class="w"><section><div class="empty">${MODE==="demo"?"Admin needs the live backend and its password. This preview has no database, so nothing can be edited here.":"Admin is unavailable while the site can't reach its database."}</div></section></main>`;
  if(!canEdit())return head+`<main class="w"><section><form class="ed" id="lf" style="max-width:420px" onsubmit="return false"><b>Sign in</b><label>Admin password<input id="pw" type="password" autocomplete="current-password" required></label><button class="btn" id="li">Sign in</button><p class="msg" id="a-msg"></p></form></section></main>`;
- return head+`<main class="w"><section>${MODE==="demo"?'<div class="demo">Demo mode: nothing is saved and changes disappear when you refresh. Run the backend to save to Turso.</div>':""}<div class="tabs" id="at">${[["fixtures","Fixtures"],["news","News"],["teams","Teams"],["players","Players"],["site","Banners"]].map(([k,l])=>`<button role="tab" data-k="${k}" aria-selected="${AT===k}">${l}</button>`).join("")}${MODE==="live"?'<button id="so" style="margin-left:auto;border-color:var(--line)">Sign out</button>':""}</div><div id="ad"></div></section></main>`}
+ return head+`<main class="w"><section><div class="tabs" id="at">${[["fixtures","Fixtures"],["news","News"],["teams","Teams"],["players","Players"],["site","Banners"]].map(([k,l])=>`<button role="tab" data-k="${k}" aria-selected="${AT===k}">${l}</button>`).join("")}${MODE==="live"?'<button id="so" style="margin-left:auto;border-color:var(--line)">Sign out</button>':""}</div><div id="ad"></div></section></main>`}
 };
 
 /* ---------- admin ---------- */
@@ -319,12 +321,12 @@ const rm=matchMedia("(prefers-reduced-motion:reduce)").matches;
 function after(r){
  if(r==="matches"){const draw=()=>{const ok=m=>!MF||m.home===MF||m.away===MF;$("#ml").innerHTML=grouped((MV==="fx"?upcoming():results()).filter(ok))};
   document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{MV=b.dataset.v;document.querySelectorAll(".tabs button").forEach(x=>x.setAttribute("aria-selected",x===b));draw()});$("#tf").onchange=e=>{MF=e.target.value;draw()};draw()}
- if(r==="admin"){
+ if(r==="admin"&&MODE==="live"){
   if(!canEdit()){$("#lf").onsubmit=async e=>{e.preventDefault();const m=$("#a-msg");m.textContent="Signing in...";try{const j=await api("POST","/login",{password:$("#pw").value});setTok(j.token);route(false)}catch(x){m.textContent=x.message}}}
   else{document.querySelectorAll("#at button[data-k]").forEach(b=>b.onclick=()=>{AT=b.dataset.k;document.querySelectorAll("#at button[data-k]").forEach(x=>x.setAttribute("aria-selected",x===b));adminTab()});
    if($("#so"))$("#so").onclick=()=>{setTok(null);route(false)};adminTab()}}}
 function route(vt=true){const [r,a]=(location.hash.replace(/^#\/?/,"")||"home").split("/");
- const html=r==="news"&&a?P.article(a):r==="team"?P.team(a):(P[r]||P.home)();const key=r==="team"?"teams":r;
+ const html=MODE==="error"&&r!=="admin"?P.down():r==="news"&&a?P.article(a):r==="team"?P.team(a):(P[r]||P.home)();const key=r==="team"?"teams":r;
  const apply=()=>{const y=scrollY;$("#app").innerHTML=html;document.querySelectorAll("#nv a").forEach(x=>x.classList.toggle("on",x.dataset.r===key));scrollTo(0,vt?0:y);after(r);
   document.querySelectorAll("tr[data-go]").forEach(tr=>tr.onclick=()=>location.hash=tr.dataset.go)};
  if(vt&&document.startViewTransition&&!rm)document.startViewTransition(apply);else{if(vt)document.documentElement.classList.add("novt");apply()}}
@@ -332,9 +334,10 @@ function ann(){const a=D.site.ann,e=$("#ann");if(a&&a.on&&a.text){e.hidden=false
 function changed(){ann();if((location.hash.replace(/^#\/?/,"")||"home").split("/")[0]==="admin"&&canEdit()&&$("#ad")){adminList();return}route(false)}
 addEventListener("hashchange",()=>route(true));
 /* load: real backend if it answers, otherwise demo data */
-(async()=>{try{const d=await api("GET","/data");if(!Array.isArray(d.teams))throw 0;D={teams:d.teams,fixtures:d.fixtures||[],news:d.news||[],players:d.players||[],site:{...DEF.site,...(d.site||{})}};MODE="live"}
- catch(e){D={teams:DEF.teams,fixtures:DEF.fixtures,news:DEF.news,players:DEF.players,site:DEF.site};MODE="demo"}
- ann();route(true)})();
+(async()=>{try{const d=await api("GET","/data");if(!Array.isArray(d.teams))throw 0;D={teams:d.teams,fixtures:d.fixtures||[],news:d.news||[],players:d.players||[],site:{...DEF.site,...(d.site||{})}};MODE="live";if(TOKEN){try{await api("GET","/me")}catch(e){if(e.status===401)setTok(null)}}}
+ catch(e){if(e&&e.status>=500){MODE="error";D={teams:[],fixtures:[],news:[],players:[],site:{}}}
+  else{D={teams:DEF.teams,fixtures:DEF.fixtures,news:DEF.news,players:DEF.players,site:DEF.site};MODE="demo"}}
+ $("#adl").hidden=MODE!=="live";ann();route(true)})();
 </script>
 </body>
 </html>
