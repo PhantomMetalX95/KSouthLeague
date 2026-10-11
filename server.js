@@ -3,7 +3,7 @@ import express from "express";
 import crypto from "node:crypto";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { init, readAll, clean, upsert, remove, saveSite, TABLES } from "./db.js";
+import { init, readAll, clean, upsert, remove, saveSite, cascade, saveMatchStats, TABLES } from "./db.js";
 
 const app = express();
 const PASS = process.env.ADMIN_PASSWORD || "";
@@ -54,10 +54,17 @@ const okId = (id) => /^[A-Za-z0-9_-]{1,60}$/.test(id);
 app.put("/api/site", admin, async (req, res, next) => {
   try { await saveSite(req.body || {}); res.json({ ok: true }); } catch (e) { next(e); }
 });
+app.put("/api/match-stats/:fixture", admin, async (req, res, next) => {
+  try {
+    if (!okId(req.params.fixture)) return res.status(404).json({ error: "Not found" });
+    await saveMatchStats(req.params.fixture, req.body?.rows);
+    res.json({ ok: true });
+  } catch (e) { next(e); }
+});
 app.put("/api/:table/:id", admin, async (req, res, next) => {
   try {
     const { table, id } = req.params;
-    if (!TABLES[table] || !okId(id)) return res.status(404).json({ error: "Not found" });
+    if (!TABLES[table] || TABLES[table].bulk || !okId(id)) return res.status(404).json({ error: "Not found" });
     await upsert(table, id, clean(table, req.body || {}));
     res.json({ ok: true });
   } catch (e) { next(e); }
@@ -65,8 +72,9 @@ app.put("/api/:table/:id", admin, async (req, res, next) => {
 app.delete("/api/:table/:id", admin, async (req, res, next) => {
   try {
     const { table, id } = req.params;
-    if (!TABLES[table] || !okId(id)) return res.status(404).json({ error: "Not found" });
+    if (!TABLES[table] || TABLES[table].bulk || !okId(id)) return res.status(404).json({ error: "Not found" });
     await remove(table, id);
+    await cascade(table, id);
     res.json({ ok: true });
   } catch (e) { next(e); }
 });
