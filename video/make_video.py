@@ -5,7 +5,7 @@ K South League: gameweek round-up video maker.
 Reads a gameweek from your site (or a JSON file), draws a 1080x1920 vertical video
 (intro, one scene per match, results, table, outro), records a voice-over and writes an MP4.
 
-    python make_video.py --api https://YOUR-SITE/api/data --week 3
+    python make_video.py --api https://k-south-league.vercel.app/api/data --week 3
     python make_video.py --data sample-data.json --week 2 --voice none
 
 See README.md for setup.
@@ -287,7 +287,15 @@ def chrome(week, header=True):
 def load_data(a):
     if a.data:
         return json.load(open(a.data, encoding="utf-8"))
-    req = urllib.request.Request(a.api, headers={"User-Agent": "ksl-video/1.0"})
+    
+    url = a.api.strip()
+    while "https://https://" in url:
+        url = url.replace("https://https://", "https://")
+    while "http://http://" in url:
+        url = url.replace("http://http://", "http://")
+        
+    print(f"Attempting to fetch from: '{url}'")
+    req = urllib.request.Request(url, headers={"User-Agent": "ksl-video/1.0"})
     with urllib.request.urlopen(req, timeout=30) as r:
         return json.loads(r.read().decode("utf-8"))
 
@@ -378,73 +386,88 @@ class Model:
         return sorted(rows.values(), key=lambda r: (-r["pts"], -(r["gf"] - r["ga"]), -r["gf"], r["t"]["name"]))
 
 
-# ----------------------------------------------------------------------------- narration
+# ----------------------------------------------------------------------------- narration with banter & edge
 
 
 def goal_phrase(lst):
     out = []
     for n, k in lst:
-        out.append(n if k == 1 else n + " twice" if k == 2 else n + " with a hat-trick" if k == 3 else "%s with %s" % (n, nw(k)))
+        out.append(n if k == 1 else n + " twice" if k == 2 else n + " with a massive hat-trick" if k == 3 else "%s with %s absolute goals" % (n, nw(k)))
     return join(out)
 
 
 def narration(M):
     n = len(M.matches)
     sc = {}
-    sc["intro"] = [("a", "Welcome to the Gameweek %d round up from the K South League. Here is how it finished." % M.week)]
+    sc["intro"] = [("a", "Damn, welcome back to Gameweek %d of the K South League! Let's see who showed up and who completely messed it up." % M.week)]
     for i, m in enumerate(M.matches):
         h, a, hg, ag = m["home"]["name"], m["away"]["name"], m["hg"], m["ag"]
+        diff = abs(hg - ag)
+        
         if hg > ag:
-            res = "%s beat %s, %s %s." % (h, a, nw(hg), nw(ag))
+            if diff >= 3:
+                res = "%s completely destroyed %s, smashing them %s to %s!" % (h, a, nw(hg), nw(ag))
+            else:
+                res = "%s held their nerve and beat %s, %s to %s." % (h, a, nw(hg), nw(ag))
         elif ag > hg:
-            res = "%s won away at %s, %s %s." % (a, h, nw(ag), nw(hg))
+            if diff >= 3:
+                res = "%s went away and absolutely humiliated %s, crushing them %s to %s!" % (a, h, nw(ag), nw(hg))
+            else:
+                res = "%s pulled off a sweet away win at %s, taking it %s to %s." % (a, h, nw(ag), nw(hg))
         elif hg == 0:
-            res = "%s and %s played out a goalless draw." % (h, a)
+            res = "%s and %s played out a bloody boring goalless draw. Absolute snooze fest." % (h, a)
         else:
-            res = "%s and %s shared the points, %s all." % (h, a, nw(hg))
+            res = "%s and %s shared the points in a wild %s all draw." % (h, a, nw(hg))
+            
         segs = [("result", ("In match %s, " % nw(i + 1) if n > 1 else "") + res)]
         parts = []
         for t in (m["home"], m["away"]):
             g = m["sides"][t["id"]]["goals"]
             if g:
-                parts.append("%s scored for %s." % (goal_phrase(g), t["name"]))
+                parts.append("%s put in work for %s." % (goal_phrase(g), t["name"]))
         if parts:
             segs.append(("goals", " ".join(parts)))
+            
         y = [nm for t in (m["home"], m["away"]) for nm, _ in m["sides"][t["id"]]["yellow"]]
         r = [nm for t in (m["home"], m["away"]) for nm, _ in m["sides"][t["id"]]["red"]]
         cs = []
         if len(y) > 4:
-            cs.append("%s yellow cards were shown in this one." % nw(len(y)).capitalize())
+            cs.append("Ref was handing cards out like candy, with %s yellow cards flying around." % nw(len(y)))
         elif y:
-            cs.append(("A yellow card for %s." if len(y) == 1 else "Yellow cards for %s.") % join(y))
+            cs.append(("A clumsy yellow card for %s." if len(y) == 1 else "Yellow cards handed out to %s.") % join(y))
         if r:
-            cs.append("%s %s sent off." % (join(r), "was" if len(r) == 1 else "were"))
+            cs.append("And damn, %s got sent packing!" % join(r))
         if cs:
             segs.append(("cards", " ".join(cs)))
+            
         clean = [t["name"] for t, c in ((m["home"], ag), (m["away"], hg)) if c == 0 and (hg + ag) > 0]
         if clean:
-            segs.append(("cs", "%s kept a clean sheet." % join(clean)))
+            segs.append(("cs", "Props to %s for locking down a clean sheet." % join(clean)))
+            
         sc["m%d" % i] = segs
-    r = ["That is %s goals, %s and %s across the week." % (nw(M.goals), "one yellow card" if M.yellows == 1 else "%s yellow cards" % nw(M.yellows),
-                                                          "no red cards" if M.reds == 0 else "one red card" if M.reds == 1 else "%s red cards" % nw(M.reds))]
+        
+    r = ["Hell of a week. That is %s goals, %s and %s total." % (nw(M.goals), "one lonely yellow card" if M.yellows == 1 else "%s yellow cards" % nw(M.yellows),
+                                                          "zero red cards, boring" if M.reds == 0 else "one red card" if M.reds == 1 else "%s brutal red cards" % nw(M.reds))]
     if M.top:
-        r.append("%s was the top scorer of the week with %s." % (M.top[0], nw(M.top[1]) + (" goal" if M.top[1] == 1 else " goals")))
+        r.append("Shoutout to %s, absolute baller of the week with %s." % (M.top[0], nw(M.top[1]) + (" goal" if M.top[1] == 1 else " goals")))
     sc["results"] = [("a", " ".join(r))]
+    
     t0 = M.table
-    s = ["%s lead the table on %s points." % (t0[0]["t"]["name"], t0[0]["pts"])] if t0[0]["p"] else ["The table is wide open."]
+    s = ["%s are sitting pretty at the top with %s points." % (t0[0]["t"]["name"], t0[0]["pts"])] if t0[0]["p"] else ["The table is wide open, anybody's game."]
     if len(t0) > 1 and t0[0]["p"]:
-        s.append("%s are second on %s." % (t0[1]["t"]["name"], t0[1]["pts"]))
+        s.append("%s are chasing hard in second with %s." % (t0[1]["t"]["name"], t0[1]["pts"]))
     if M.prev:
         pp = {r["t"]["id"]: i for i, r in enumerate(M.prev)}
         mv = sorted(((pp[r["t"]["id"]] - i, r["t"]["name"], i + 1) for i, r in enumerate(t0)), reverse=True)
         if mv and mv[0][0] > 0:
-            s.append("%s climb to %s." % (mv[0][1], POS.get(mv[0][2], ordinal(mv[0][2]))))
+            s.append("Watch out, %s made a massive jump up to %s." % (mv[0][1], POS.get(mv[0][2], ordinal(mv[0][2]))))
     sc["table"] = [("a", " ".join(s))]
+    
     if M.next_date:
         dt = datetime.strptime(M.next_date, "%Y-%m-%d")
-        o = "Next up, Gameweek %d, on %s the %s of %s. Follow the K South League. See you next week." % (M.next_week, dt.strftime("%A"), ordinal(dt.day), dt.strftime("%B"))
+        o = "Don't slack off. Gameweek %d is coming up fast on %s the %s of %s. Catch you next time!" % (M.next_week, dt.strftime("%A"), ordinal(dt.day), dt.strftime("%B"))
     else:
-        o = "That is the round up. Follow the K South League for every result."
+        o = "That's it for this round. Keep up with the K South League or get left behind."
     sc["outro"] = [("a", o)]
     return sc
 
