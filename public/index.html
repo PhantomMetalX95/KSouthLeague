@@ -105,7 +105,7 @@ tr[data-go]{cursor:pointer}tr[data-go]:hover{background:var(--bg)}
 .pl strong{display:block;font-weight:700}.pl .tag{background:var(--c);margin-top:4px}
 
 /* team badges + Civo United theme (black and gold, matching the crest) */
-.cr.bi{background:none;border-radius:0;object-fit:contain}
+.cr.bi{background:#0d1230;border-radius:50%;padding:3px;object-fit:contain}
 .gold{background:linear-gradient(180deg,#f6e2a0,#d4a64a 55%,#9a6f1f);-webkit-background-clip:text;background-clip:text;color:transparent}
 .crown{width:26px;height:22px;display:block}
 .tc .cb{width:58px;height:62px;object-fit:contain;position:relative;z-index:1;filter:drop-shadow(0 4px 8px rgba(0,0,0,.5))}
@@ -127,30 +127,34 @@ tr[data-go]{cursor:pointer}tr[data-go]:hover{background:var(--bg)}
 .thw.th-civo .m,.thw.th-civo .stats div,.thw.th-civo .pl{border-color:#2e2616}
 .thw.th-civo .day{color:#d4a64a}
 
-/* 2nd Avenue: red, white and black */
-.tc.th-avenue{background:#fff;color:#16090a;border:2px solid #16090a;border-top:10px solid #d7191f;justify-content:flex-start;gap:8px}
-.tc.th-avenue::after{content:"\2605";top:auto;bottom:-30px;right:-6px;font:400 150px/1 Archivo,sans-serif;color:#d7191f;opacity:.14}
-.tc.th-avenue h3{color:#16090a}.tc.th-avenue small{color:#7a5a5c}.tc.th-avenue>div,.tc.th-baraka>div,.tc.th-samba>div,.tc.th-elland>div{margin-top:auto;position:relative;z-index:1}
-.pb.th-avenue{background:linear-gradient(112deg,#fff 0 58%,#d7191f 58% 64%,#fff 64% 66%,#16090a 66%);color:#16090a}
-.pb.th-avenue::before{right:auto;left:-10px;-webkit-text-stroke-color:rgba(215,25,31,.16)}
-.pb.th-avenue::after{height:10px;background:#d7191f}.pb.th-avenue p{color:#4a2f31}.pb.th-avenue .crumb,.pb.th-avenue .crumb a{color:#d7191f}
-.thw.th-avenue{background:#fff;--card:#fff;--bg:#fff;--tx:#16090a;--line:#f0d6d7;--mut:#7a5a5c;--org:#d7191f;color:var(--tx);padding-bottom:36px}
-.thw.th-avenue .hd::after{background:linear-gradient(90deg,#d7191f 0 56px,#f0d6d7 56px)}
-.thw.th-avenue .stats b,.thw.th-avenue .pl b{color:#d7191f}.thw.th-avenue .pl{border-left-color:#d7191f}.thw.th-avenue .pl .tag{background:#d7191f}
-@media(max-width:700px){.pb.th-avenue{background:#fff}}
-/* Baraka: yellow and black, sunburst */
-.tc.th-baraka{background:#ffd21f;color:#171200;border:3px solid #171200;justify-content:flex-start;gap:8px}
-.tc.th-baraka::after{content:"";top:0;left:0;right:0;bottom:0;font-size:0;background:repeating-conic-gradient(from 0deg at 88% 8%,rgba(255,255,255,.38) 0 7deg,transparent 7deg 18deg)}
-.tc.th-baraka .cb{background:#171200;border-radius:50%;padding:9px;width:72px;height:72px;filter:none}
-.tc.th-baraka h3{color:#171200}.tc.th-baraka small{color:#3d3200}
-.pb.th-baraka{background:#ffd21f;color:#171200}.pb.th-baraka::before{right:auto;left:-10px;-webkit-text-stroke-color:rgba(23,18,0,.14)}
-.pb.th-baraka::after{height:14px;background:repeating-linear-gradient(-45deg,#171200 0 14px,#ffd21f 14px 28px)}
-.pb.th-baraka p{color:#3d3200}.pb.th-baraka .crumb,.pb.th-baraka .crumb a{color:#171200}
-.pb.th-baraka .tbadge{aspect-ratio:1;object-fit:contain;background:#171200;border-radius:50%;padding:20px;width:clamp(130px,19vw,230px);box-shadow:0 0 0 8px #ffd21f,0 0 0 13px #171200;filter:none}
-.thw.th-baraka{background:#fff;--card:#fff;--bg:#fff;--tx:#171200;--line:#efe3a6;--mut:#6b5a00;--org:#ffd21f;color:var(--tx);padding-bottom:36px}
-.thw.th-baraka .hd::after{background:linear-gradient(90deg,#ffd21f 0 56px,#efe3a6 56px)}
-.thw.th-baraka .stats div{border-top:6px solid #ffd21f}.thw.th-baraka .stats b,.thw.th-baraka .pl b{color:#171200}
-.thw.th-baraka .pl{border-left-color:#ffd21f}.thw.th-baraka .pl .tag{background:#ffd21f;color:#171200}
+/* shared: pin card text to the bottom */
+.tc.th-avenue>div,.tc.th-baraka>div,.tc.th-samba>div,.tc.th-elland>div,.tc.th-mandem>div{margin-top:auto;position:relative;z-index:1}
+/* 2nd Avenue: asphalt black, white road markings */
+.tc.th-avenue{background:linear-gradient(135deg,#17181b,#0b0b0d);color:#fff;border:3px solid #fff;box-shadow:inset 0 0 0 5px #0b0b0d,inset 0 0 0 7px rgba(255,255,255,.35);justify-content:flex-start;gap:8px}
+.tc.th-avenue::after{content:"";top:0;bottom:0;right:26px;left:auto;width:6px;font-size:0;background:repeating-linear-gradient(180deg,#fff 0 22px,transparent 22px 44px);opacity:.55}
+.tc.th-avenue .cb{width:78px;height:78px;filter:none}.tc.th-avenue h3{color:#fff}.tc.th-avenue small{color:#c9ccd1}
+.pb.th-avenue{background:repeating-linear-gradient(112deg,transparent 0 56px,rgba(255,255,255,.045) 56px 60px),#0b0b0d}
+.pb.th-avenue::before{right:auto;left:-10px;-webkit-text-stroke-color:rgba(255,255,255,.1)}
+.pb.th-avenue::after{height:12px;background:repeating-linear-gradient(90deg,#fff 0 52px,transparent 52px 86px)}
+.pb.th-avenue .crumb,.pb.th-avenue .crumb a,.pb.th-avenue p{color:#c9ccd1}
+.pb.th-avenue .tbadge{border-radius:50%;box-shadow:0 0 0 6px #0b0b0d,0 0 0 9px #fff,0 24px 40px rgba(0,0,0,.5);filter:none}
+.thw.th-avenue{background:#0b0b0d;--card:#17181b;--bg:#0b0b0d;--tx:#f3f4f6;--line:#2c2e33;--mut:#9a9ea6;--org:#fff;color:var(--tx);padding-bottom:36px}
+.thw.th-avenue .hd::after{background:linear-gradient(90deg,#fff 0 56px,#2c2e33 56px)}
+.thw.th-avenue .stats div{border-top:4px solid #fff}.thw.th-avenue .stats b,.thw.th-avenue .pl b{color:#fff}
+.thw.th-avenue .pl{border-left-color:#fff}.thw.th-avenue .pl .tag{background:#fff;color:#0b0b0d}.thw.th-avenue .day{color:#c9ccd1}
+/* Baraka: lion gold and black */
+.tc.th-baraka{background:#edbc3f;color:#0b0b0b;border:3px solid #0b0b0b;justify-content:flex-start;gap:8px}
+.tc.th-baraka::after{content:"";top:0;left:0;right:0;bottom:0;font-size:0;background:repeating-conic-gradient(from 0deg at 88% 8%,rgba(255,255,255,.4) 0 7deg,transparent 7deg 18deg)}
+.tc.th-baraka .cb{background:#0b0b0b;border-radius:50%;padding:8px;width:84px;height:84px;filter:none}
+.tc.th-baraka h3{color:#0b0b0b}.tc.th-baraka small{color:#3d2f08}
+.pb.th-baraka{background:#edbc3f;color:#0b0b0b}.pb.th-baraka::before{right:auto;left:-10px;-webkit-text-stroke-color:rgba(11,11,11,.14)}
+.pb.th-baraka::after{height:14px;background:repeating-linear-gradient(-45deg,#0b0b0b 0 14px,#edbc3f 14px 28px)}
+.pb.th-baraka p{color:#3d2f08}.pb.th-baraka .crumb,.pb.th-baraka .crumb a{color:#0b0b0b}
+.pb.th-baraka .tbadge{aspect-ratio:1;object-fit:contain;background:#0b0b0b;border-radius:50%;padding:22px;width:clamp(140px,20vw,250px);box-shadow:0 0 0 8px #edbc3f,0 0 0 13px #0b0b0b;filter:none}
+.thw.th-baraka{background:#fff;--card:#fff;--bg:#fff;--tx:#0b0b0b;--line:#f0e1b2;--mut:#6b5a1d;--org:#edbc3f;color:var(--tx);padding-bottom:36px}
+.thw.th-baraka .hd::after{background:linear-gradient(90deg,#edbc3f 0 56px,#f0e1b2 56px)}
+.thw.th-baraka .stats div{border-top:6px solid #edbc3f}.thw.th-baraka .stats b,.thw.th-baraka .pl b{color:#0b0b0b}
+.thw.th-baraka .pl{border-left-color:#edbc3f}.thw.th-baraka .pl .tag{background:#edbc3f;color:#0b0b0b}
 /* Samba Boys: black, white and grey facets */
 :root{--facet:linear-gradient(135deg,#f7f8f9 0 34%,transparent 34%),linear-gradient(205deg,#dfe2e6 0 26%,transparent 26%),linear-gradient(320deg,#e9ebee 0 38%,transparent 38%),#d9dce0}
 .tc.th-samba{background:var(--facet);color:#0b0b0c;border:3px solid #0b0b0c;justify-content:flex-start;gap:8px}
@@ -163,18 +167,34 @@ tr[data-go]{cursor:pointer}tr[data-go]:hover{background:var(--bg)}
 .thw.th-samba{background:#f4f5f6;--card:#fff;--bg:#f4f5f6;--tx:#0b0b0c;--line:#d5d8dc;--mut:#5a5f66;--org:#0b0b0c;color:var(--tx);padding-bottom:36px}
 .thw.th-samba .hd::after{background:linear-gradient(90deg,#0b0b0c 0 56px,#d5d8dc 56px)}
 .thw.th-samba .stats b,.thw.th-samba .pl b{color:#0b0b0c}.thw.th-samba .pl{border-left-color:#0b0b0c}.thw.th-samba .pl .tag{background:#0b0b0c;color:#fff}
-/* Elland: stadium blue, mowing stripes */
-.tc.th-elland{background:repeating-linear-gradient(90deg,#0b57a8 0 34px,#0e61ba 34px 68px);color:#fff;border:3px solid #fff;outline:2px solid #0b57a8;justify-content:flex-start;gap:10px}
-.tc.th-elland::after{content:"";top:auto;left:0;right:0;bottom:0;height:8px;font-size:0;background:#fff}
-.tc.th-elland .cb{width:100%;max-width:190px;height:auto;background:#fff;padding:8px 10px;border-radius:6px;filter:none}
-.tc.th-elland h3{text-transform:uppercase;letter-spacing:.03em}
-.pb.th-elland{background:repeating-linear-gradient(90deg,#0b57a8 0 90px,#0e61ba 90px 180px);color:#fff}
-.pb.th-elland::after{height:10px;background:#fff}.pb.th-elland h1{text-transform:uppercase;letter-spacing:.02em}
-.pb.th-elland .tbadge{background:#fff;padding:12px 16px;border-radius:8px;width:clamp(200px,32vw,420px);filter:none;box-shadow:0 18px 34px rgba(0,0,0,.35)}
-@media(max-width:700px){.pb.th-elland .tbadge{display:none}}
-.thw.th-elland{background:#fff;--card:#fff;--bg:#fff;--tx:#0a2a52;--line:#d6e2f2;--mut:#4a6385;--org:#0b57a8;color:var(--tx);padding-bottom:36px}
-.thw.th-elland .hd::after{background:linear-gradient(90deg,#0b57a8 0 56px,#d6e2f2 56px)}
-.thw.th-elland .stats b,.thw.th-elland .pl b{color:#0b57a8}.thw.th-elland .pl{border-left-color:#0b57a8}.thw.th-elland .pl .tag{background:#0b57a8}
+/* Elland: red, white and gold stars */
+.tc.th-elland{background:repeating-radial-gradient(ellipse 80% 55% at 105% 110%,transparent 0 22px,rgba(255,255,255,.14) 22px 25px),linear-gradient(160deg,#c20010,#680008);color:#fff;border:3px solid #fff;justify-content:flex-start;gap:10px}
+.tc.th-elland::after{content:"\2605\2605\2605";top:14px;right:16px;bottom:auto;left:auto;font:400 26px/1 Archivo,sans-serif;letter-spacing:4px;color:#f8c800}
+.tc.th-elland .cb{width:100%;max-width:170px;height:auto;filter:drop-shadow(0 6px 10px rgba(0,0,0,.45))}
+.tc.th-elland h3{text-transform:uppercase;letter-spacing:.03em}.tc.th-elland small{color:#ffd9dc}
+.pb.th-elland{background:repeating-radial-gradient(ellipse 52% 90% at 82% 48%,transparent 0 40px,rgba(255,255,255,.08) 40px 43px),radial-gradient(ellipse 70% 130% at 80% 45%,#b80012,#3f0006 75%);color:#fff}
+.pb.th-elland::before{right:auto;left:-10px;-webkit-text-stroke-color:rgba(255,255,255,.12)}
+.pb.th-elland::after{height:12px;background:linear-gradient(90deg,#f8c800 0 34%,#fff 34% 67%,#e30000 67%)}
+.pb.th-elland h1::after{content:"\2605\2605\2605";display:block;font:400 34px/1 Archivo,sans-serif;letter-spacing:8px;color:#f8c800;margin-top:12px}
+.pb.th-elland p{color:#ffd9dc}.pb.th-elland .crumb,.pb.th-elland .crumb a{color:#f8c800}.pb.th-elland .tbadge{width:clamp(220px,34vw,440px)}
+.thw.th-elland{background:#fff;--card:#fff;--bg:#fff;--tx:#2a0a0d;--line:#f3d4d6;--mut:#8a5a5e;--org:#e30000;color:var(--tx);padding-bottom:36px}
+.thw.th-elland .hd::after{background:linear-gradient(90deg,#e30000 0 56px,#f3d4d6 56px)}
+.thw.th-elland .stats div{border-top:4px solid #f8c800}.thw.th-elland .stats b,.thw.th-elland .pl b{color:#e30000}
+.thw.th-elland .pl{border-left-color:#e30000}.thw.th-elland .pl .tag{background:#e30000}
+/* Mandem: street black, white brush, gold crown */
+.tc.th-mandem{background:radial-gradient(rgba(255,255,255,.1) 1.3px,transparent 1.7px) 0 0/11px 11px,#070707;color:#fff;border:3px solid #fff;justify-content:flex-start;gap:8px}
+.tc.th-mandem::after{content:"";top:auto;left:auto;right:-14px;bottom:-6px;width:150px;height:62px;font-size:0;background:linear-gradient(90deg,#daa33f,#f2c56e);clip-path:polygon(0 38%,100% 0,94% 100%,6% 82%)}
+.tc.th-mandem .cb{width:100%;max-width:200px;height:auto;filter:drop-shadow(0 6px 10px rgba(0,0,0,.6))}
+.tc.th-mandem h3{font-style:italic;color:#daa33f;letter-spacing:.04em;text-transform:uppercase;font-size:26px}.tc.th-mandem small{color:#bdbdbd}
+.pb.th-mandem{background:radial-gradient(rgba(255,255,255,.08) 1.4px,transparent 1.8px) 0 0/12px 12px,#070707}
+.pb.th-mandem::before{right:auto;left:-10px;-webkit-text-stroke-color:rgba(255,255,255,.09)}
+.pb.th-mandem::after{height:16px;background:linear-gradient(90deg,#fff 0 58%,#daa33f 58%);clip-path:polygon(0 0,100% 0,97% 100%,0 100%)}
+.pb.th-mandem h1{font-style:italic;display:inline-block;transform:skewX(-8deg);text-shadow:5px 5px 0 #daa33f}
+.pb.th-mandem .crumb,.pb.th-mandem .crumb a{color:#daa33f}.pb.th-mandem p{color:#cfcfcf}.pb.th-mandem .tbadge{width:clamp(220px,34vw,470px);filter:drop-shadow(0 18px 30px rgba(0,0,0,.7))}
+.thw.th-mandem{background:#070707;--card:#121212;--bg:#070707;--tx:#f5f5f5;--line:#2a2a2a;--mut:#a3a3a3;--org:#daa33f;color:var(--tx);padding-bottom:36px}
+.thw.th-mandem .hd::after{background:linear-gradient(90deg,#daa33f 0 56px,#2a2a2a 56px)}
+.thw.th-mandem .stats div{border-left:5px solid #daa33f}.thw.th-mandem .stats b{color:#fff;font-style:italic}
+.thw.th-mandem .pl{border-left-color:#fff}.thw.th-mandem .pl b{color:#fff;font-style:italic}.thw.th-mandem .pl .tag{background:#daa33f;color:#070707}.thw.th-mandem .day{color:#daa33f}
 /* stats */
 .lbs{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
 .lb{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
@@ -234,7 +254,7 @@ footer a{color:#fff;margin-right:16px;font-weight:700}
 /* ===== Starter data: only used in demo mode (when there is no backend). With the backend running, everything comes from Turso. ===== */
 const V="Embakasi West";
 const DEF={
-teams:[["t0","Civo United FC","CIV","#d4a64a","civo","/badges/civo.png"],["t1","Elland","ELL","#0b57a8","elland","/badges/elland.png"],["t2","Samba Boys","SAM","#1c1c1e","samba","/badges/samba.png"],["t3","Baraka","BAR","#ffd21f","baraka","/badges/baraka.png"],["t4","2nd Avenue","2AV","#d7191f","avenue","/badges/avenue.png"],["t5","Mandem","MAN","#e8590c","",""]].map(([id,name,short,c,theme,badge],ord)=>({id,name,short,c,manager:"",ground:V,bio:"",ord,badge,theme})),
+teams:[["t0","Civo United FC","CIV","#d4a64a","civo","/badges/civo.png",""],["t1","Elland","ELL","#e30000","elland","/badges/elland.png",""],["t2","Samba Boys","SAM","#1c1c1e","samba","/badges/samba.png",""],["t3","Baraka","BAR","#edbc3f","baraka","/badges/baraka.png",""],["t4","2nd Avenue","2AV","#e9e9e9","avenue","/badges/avenue.png",""],["t5","Mandem","MAN","#daa33f","mandem","/badges/mandem.png","/badges/mandem-icon.png"]].map(([id,name,short,c,theme,badge,icon],ord)=>({id,name,short,c,manager:"",ground:V,bio:"",ord,badge,theme,icon})),
 fixtures:[["f1","t0","t1","2026-09-26","09:00",3,2],["f2","t2","t3","2026-09-26","10:00",1,1],["f3","t4","t5","2026-09-26","11:00",0,2],["f4","t1","t2","2026-10-03","09:00",2,0],["f5","t3","t4","2026-10-03","10:00",4,1],["f6","t5","t0","2026-10-03","11:00",1,1],["f7","t0","t2","2026-10-17","09:00",null,null],["f8","t1","t4","2026-10-17","10:00",null,null],["f9","t3","t5","2026-10-17","11:00",null,null]].map(([id,home,away,date,time,hg,ag])=>({id,home,away,date,time,venue:V,hg,ag})),
 news:[{id:"season-kicks-off",title:"Season kicks off",tag:"League",date:"2026-09-26",color:"#ff5a1f",summary:"Six teams, one trophy. Here is what to expect from the opening weeks.",body:"Six teams, fifteen matches each and one trophy.\n\nThe K South League is back for another season of fast, loud seven-a-side football in Embakasi West."},
  {id:"matchday-2-roundup",title:"Matchday 2 round-up",tag:"Report",date:"2026-10-03",color:"#2f9e44",summary:"Baraka put four past 2nd Avenue to go top of the table.",body:"Baraka won 4-1 against 2nd Avenue.\n\nElland beat Samba Boys 2-0, while Mandem and Civo United FC shared a 1-1 draw."},
@@ -268,8 +288,7 @@ const byTime=(a,b)=>(a.date+a.time).localeCompare(b.date+b.time);
 const teams=()=>[...D.teams].sort((a,b)=>(a.ord??99)-(b.ord??99)||a.name.localeCompare(b.name));
 const upcoming=()=>D.fixtures.filter(f=>!played(f)).sort(byTime),results=()=>D.fixtures.filter(played).sort((a,b)=>byTime(b,a));
 const newsList=()=>[...D.news].sort((a,b)=>String(b.date).localeCompare(String(a.date)));
-const WIDE=["elland"];
-const crest=t=>t.badge&&!WIDE.includes(t.theme)?`<img class="cr bi" src="${esc(t.badge)}" alt="">`:`<span class="cr" style="background:${esc(t.c)}">${esc((t.short||"?")[0])}</span>`;
+const crest=t=>(t.icon||t.badge)?`<img class="cr bi" src="${esc(t.icon||t.badge)}" alt="">`:`<span class="cr" style="background:${esc(t.c)}">${esc((t.short||"?")[0])}</span>`;
 const CROWN='<svg class="crown" viewBox="0 0 24 20" aria-hidden="true"><defs><linearGradient id="gg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6e2a0"/><stop offset="1" stop-color="#a77a24"/></linearGradient></defs><path d="M2 18 4 5l5 6 3-9 3 9 5-6 2 13z" fill="url(#gg)"/></svg>';
 const mrow=f=>{const a=T(f.home),b=T(f.away);return `<div class="m"><div class="t">${crest(a)}${esc(a.name)}</div><div class="s">${played(f)?f.hg+" - "+f.ag:esc(f.time)}<small>${played(f)?"Full time":esc(f.venue)}</small></div><div class="t">${esc(b.name)}${crest(b)}</div></div>`};
 function grouped(src){let l="",h="";src.forEach(m=>{if(m.date!==l){h+=`<div class="day">${fmtDay(m.date)}</div>`;l=m.date}h+=mrow(m)});return h||'<p class="hint">Nothing here yet.</p>'}
@@ -374,7 +393,7 @@ const FORMS={
   chk:v=>!v.date?"Pick a date.":!v.home||!v.away||v.home===v.away?"Pick two different teams.":(v.hg===null)!==(v.ag===null)?"Fill in both scores or neither.":"",id:v=>rid("f")},
  news:{col:"news",one:"article",f:[["title","Title","text"],["tag","Tag (e.g. Report, Notice)","text"],["date","Date","date"],["color","Colour","color"],["summary","Summary (one or two lines)","text"],["body","Article (leave a blank line between paragraphs)","area"]],
   def:()=>({tag:"News",color:"#ff5a1f",date:new Date().toISOString().slice(0,10)}),src:newsList,lab:n=>n.title,chk:v=>v.title?"":"Add a title.",id:v=>(v.title.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,40)||"post")+"-"+Date.now().toString(36).slice(-4)},
- teams:{col:"teams",one:"team",f:[["name","Team name","text"],["short","Short name (3 letters)","text"],["c","Colour","color"],["manager","Manager","text"],["ground","Home ground","text"],["ord","Table order (0 first)","num"],["badge","Badge image (URL or /badges/name.png)","text"],["theme","Card style","sel",[["","Standard"],["civo","Civo: black and gold"],["avenue","2nd Avenue: red and white"],["baraka","Baraka: yellow and black"],["samba","Samba Boys: monochrome"],["elland","Elland: stadium blue"]]],["bio","About the team","area"]],
+ teams:{col:"teams",one:"team",f:[["name","Team name","text"],["short","Short name (3 letters)","text"],["c","Colour","color"],["manager","Manager","text"],["ground","Home ground","text"],["ord","Table order (0 first)","num"],["badge","Badge image (URL or /badges/name.png)","text"],["icon","Small icon for tables (optional)","text"],["theme","Card style","sel",[["","Standard"],["civo","Civo: black and gold"],["avenue","2nd Avenue: black and white"],["baraka","Baraka: gold and black"],["samba","Samba Boys: monochrome"],["elland","Elland: red and gold"],["mandem","Mandem: street black"]]],["bio","About the team","area"]],
   def:()=>({c:"#1971c2",ground:V,ord:D.teams.length}),src:teams,lab:t=>t.name,chk:v=>!v.name?"Add a team name.":!v.short?"Add a short name.":"",id:v=>rid("t")},
  players:{col:"players",one:"player",f:[["team","Team","team"],["name","Player name","text"],["num","Shirt number (0-99)","num"],["pos","Position","sel",POS.map(([k,l])=>[k,l.replace(/s$/,"")])]],
   def:()=>({team:PT||teams()[0]?.id,pos:"MID"}),src:()=>D.players.filter(p=>p.team===PT).sort((a,b)=>(a.num??999)-(b.num??999)),lab:p=>`${p.num??"–"}  ${p.name} (${p.pos})`,

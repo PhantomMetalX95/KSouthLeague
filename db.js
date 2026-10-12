@@ -10,7 +10,7 @@ export const POSITIONS = ["GK", "DEF", "MID", "FWD"];
 
 /* Column rules per table. s = text, i = integer, i? = integer or null */
 export const TABLES = {
-  teams: { cols: { name: "s", short: "s", c: "s", manager: "s", ground: "s", bio: "s", ord: "i", badge: "s", theme: "s" }, req: ["name", "short"] },
+  teams: { cols: { name: "s", short: "s", c: "s", manager: "s", ground: "s", bio: "s", ord: "i", badge: "s", theme: "s", icon: "s" }, req: ["name", "short"] },
   fixtures: { cols: { home: "s", away: "s", date: "s", time: "s", venue: "s", hg: "i?", ag: "i?", week: "i?" }, req: ["home", "away", "date"] },
   news: { cols: { title: "s", tag: "s", date: "s", color: "s", summary: "s", body: "s" }, req: ["title"] },
   players: { cols: { team: "s", name: "s", num: "i?", pos: "s" }, req: ["team", "name", "pos"] },
@@ -20,7 +20,7 @@ export const TABLES = {
 export async function init() {
   await db.batch(
     [
-      `CREATE TABLE IF NOT EXISTS teams (id TEXT PRIMARY KEY, name TEXT NOT NULL, short TEXT NOT NULL, c TEXT DEFAULT '#1971c2', manager TEXT DEFAULT '', ground TEXT DEFAULT '', bio TEXT DEFAULT '', ord INTEGER DEFAULT 0, badge TEXT DEFAULT '', theme TEXT DEFAULT '')`,
+      `CREATE TABLE IF NOT EXISTS teams (id TEXT PRIMARY KEY, name TEXT NOT NULL, short TEXT NOT NULL, c TEXT DEFAULT '#1971c2', manager TEXT DEFAULT '', ground TEXT DEFAULT '', bio TEXT DEFAULT '', ord INTEGER DEFAULT 0, badge TEXT DEFAULT '', theme TEXT DEFAULT '', icon TEXT DEFAULT '')`,
       `CREATE TABLE IF NOT EXISTS fixtures (id TEXT PRIMARY KEY, home TEXT NOT NULL, away TEXT NOT NULL, "date" TEXT NOT NULL, "time" TEXT DEFAULT '', venue TEXT DEFAULT '', hg INTEGER, ag INTEGER, week INTEGER)`,
       `CREATE TABLE IF NOT EXISTS news (id TEXT PRIMARY KEY, title TEXT NOT NULL, tag TEXT DEFAULT 'News', "date" TEXT DEFAULT '', color TEXT DEFAULT '#ff5a1f', summary TEXT DEFAULT '', body TEXT DEFAULT '')`,
       `CREATE TABLE IF NOT EXISTS players (id TEXT PRIMARY KEY, team TEXT NOT NULL, name TEXT NOT NULL, num INTEGER, pos TEXT NOT NULL)`,
@@ -33,7 +33,7 @@ export async function init() {
   );
   /* older databases: add the badge/theme columns if they're missing */
   const have = (await db.execute("PRAGMA table_info(teams)")).rows.map((r) => r.name);
-  for (const col of ["badge", "theme"])
+  for (const col of ["badge", "theme", "icon"])
     if (!have.includes(col)) await db.execute(`ALTER TABLE teams ADD COLUMN ${col} TEXT DEFAULT ''`);
   const fx = (await db.execute("PRAGMA table_info(fixtures)")).rows.map((r) => r.name);
   if (!fx.includes("week")) await db.execute("ALTER TABLE fixtures ADD COLUMN week INTEGER");

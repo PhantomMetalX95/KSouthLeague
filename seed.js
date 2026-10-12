@@ -3,9 +3,9 @@ import { db, init, clean, upsert, saveSite } from "./db.js";
 
 const V = "Embakasi West";
 const teams = [
-  ["t0", "Civo United FC", "CIV", "#d4a64a", "civo"], ["t1", "Elland", "ELL", "#0b57a8", "elland"], ["t2", "Samba Boys", "SAM", "#1c1c1e", "samba"],
-  ["t3", "Baraka", "BAR", "#ffd21f", "baraka"], ["t4", "2nd Avenue", "2AV", "#d7191f", "avenue"], ["t5", "Mandem", "MAN", "#e8590c", ""],
-].map(([id, name, short, c, theme], ord) => ({ id, name, short, c, ground: V, ord, theme, badge: theme ? `/badges/${theme}.png` : "" }));
+  ["t0", "Civo United FC", "CIV", "#d4a64a", "civo"], ["t1", "Elland", "ELL", "#e30000", "elland"], ["t2", "Samba Boys", "SAM", "#1c1c1e", "samba"],
+  ["t3", "Baraka", "BAR", "#edbc3f", "baraka"], ["t4", "2nd Avenue", "2AV", "#e9e9e9", "avenue"], ["t5", "Mandem", "MAN", "#daa33f", "mandem"],
+].map(([id, name, short, c, theme], ord) => ({ id, name, short, c, ground: V, ord, theme, badge: `/badges/${theme}.png`, icon: theme === "mandem" ? "/badges/mandem-icon.png" : "" }));
 const fx = (id, home, away, date, time, hg = null, ag = null) => ({ id, home, away, date, time, venue: V, hg, ag });
 const fixtures = [
   fx("f1", "t0", "t1", "2026-09-26", "09:00", 3, 2), fx("f2", "t2", "t3", "2026-09-26", "10:00", 1, 1), fx("f3", "t4", "t5", "2026-09-26", "11:00", 0, 2),
