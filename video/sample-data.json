@@ -1,0 +1,1610 @@
+{
+ "teams": [
+  {
+   "id": "t0",
+   "name": "Civo United FC",
+   "short": "CIV",
+   "c": "#d4a64a",
+   "manager": "",
+   "ground": "Embakasi West",
+   "bio": "",
+   "ord": 0,
+   "badge": "/badges/civo.png",
+   "theme": "civo"
+  },
+  {
+   "id": "t1",
+   "name": "Elland",
+   "short": "ELL",
+   "c": "#0b57a8",
+   "manager": "",
+   "ground": "Embakasi West",
+   "bio": "",
+   "ord": 1,
+   "badge": "/badges/elland.png",
+   "theme": "elland"
+  },
+  {
+   "id": "t2",
+   "name": "Samba Boys",
+   "short": "SAM",
+   "c": "#1c1c1e",
+   "manager": "",
+   "ground": "Embakasi West",
+   "bio": "",
+   "ord": 2,
+   "badge": "/badges/samba.png",
+   "theme": "samba"
+  },
+  {
+   "id": "t3",
+   "name": "Baraka",
+   "short": "BAR",
+   "c": "#ffd21f",
+   "manager": "",
+   "ground": "Embakasi West",
+   "bio": "",
+   "ord": 3,
+   "badge": "/badges/baraka.png",
+   "theme": "baraka"
+  },
+  {
+   "id": "t4",
+   "name": "2nd Avenue",
+   "short": "2AV",
+   "c": "#d7191f",
+   "manager": "",
+   "ground": "Embakasi West",
+   "bio": "",
+   "ord": 4,
+   "badge": "/badges/avenue.png",
+   "theme": "avenue"
+  },
+  {
+   "id": "t5",
+   "name": "Mandem",
+   "short": "MAN",
+   "c": "#e8590c",
+   "manager": "",
+   "ground": "Embakasi West",
+   "bio": "",
+   "ord": 5,
+   "badge": "",
+   "theme": ""
+  }
+ ],
+ "fixtures": [
+  {
+   "id": "f1",
+   "home": "t0",
+   "away": "t1",
+   "date": "2026-09-26",
+   "time": "09:00",
+   "venue": "Embakasi West",
+   "hg": 3,
+   "ag": 2
+  },
+  {
+   "id": "f2",
+   "home": "t2",
+   "away": "t3",
+   "date": "2026-09-26",
+   "time": "10:00",
+   "venue": "Embakasi West",
+   "hg": 1,
+   "ag": 1
+  },
+  {
+   "id": "f3",
+   "home": "t4",
+   "away": "t5",
+   "date": "2026-09-26",
+   "time": "11:00",
+   "venue": "Embakasi West",
+   "hg": 0,
+   "ag": 2
+  },
+  {
+   "id": "f4",
+   "home": "t1",
+   "away": "t2",
+   "date": "2026-10-03",
+   "time": "09:00",
+   "venue": "Embakasi West",
+   "hg": 2,
+   "ag": 0
+  },
+  {
+   "id": "f5",
+   "home": "t3",
+   "away": "t4",
+   "date": "2026-10-03",
+   "time": "10:00",
+   "venue": "Embakasi West",
+   "hg": 4,
+   "ag": 1
+  },
+  {
+   "id": "f6",
+   "home": "t5",
+   "away": "t0",
+   "date": "2026-10-03",
+   "time": "11:00",
+   "venue": "Embakasi West",
+   "hg": 1,
+   "ag": 1
+  },
+  {
+   "id": "f7",
+   "home": "t0",
+   "away": "t2",
+   "date": "2026-10-17",
+   "time": "09:00",
+   "venue": "Embakasi West",
+   "hg": null,
+   "ag": null
+  },
+  {
+   "id": "f8",
+   "home": "t1",
+   "away": "t4",
+   "date": "2026-10-17",
+   "time": "10:00",
+   "venue": "Embakasi West",
+   "hg": null,
+   "ag": null
+  },
+  {
+   "id": "f9",
+   "home": "t3",
+   "away": "t5",
+   "date": "2026-10-17",
+   "time": "11:00",
+   "venue": "Embakasi West",
+   "hg": null,
+   "ag": null
+  }
+ ],
+ "players": [
+  {
+   "id": "t0p0",
+   "team": "t0",
+   "name": "Player 1",
+   "num": 1,
+   "pos": "GK"
+  },
+  {
+   "id": "t0p1",
+   "team": "t0",
+   "name": "Player 2",
+   "num": 4,
+   "pos": "DEF"
+  },
+  {
+   "id": "t0p2",
+   "team": "t0",
+   "name": "Player 3",
+   "num": 5,
+   "pos": "DEF"
+  },
+  {
+   "id": "t0p3",
+   "team": "t0",
+   "name": "Player 4",
+   "num": 8,
+   "pos": "MID"
+  },
+  {
+   "id": "t0p4",
+   "team": "t0",
+   "name": "Player 5",
+   "num": 6,
+   "pos": "MID"
+  },
+  {
+   "id": "t0p5",
+   "team": "t0",
+   "name": "Player 6",
+   "num": 10,
+   "pos": "MID"
+  },
+  {
+   "id": "t0p6",
+   "team": "t0",
+   "name": "Player 7",
+   "num": 9,
+   "pos": "FWD"
+  },
+  {
+   "id": "t0p7",
+   "team": "t0",
+   "name": "Player 8",
+   "num": 11,
+   "pos": "FWD"
+  },
+  {
+   "id": "t1p0",
+   "team": "t1",
+   "name": "Player 9",
+   "num": 1,
+   "pos": "GK"
+  },
+  {
+   "id": "t1p1",
+   "team": "t1",
+   "name": "Player 10",
+   "num": 4,
+   "pos": "DEF"
+  },
+  {
+   "id": "t1p2",
+   "team": "t1",
+   "name": "Player 11",
+   "num": 5,
+   "pos": "DEF"
+  },
+  {
+   "id": "t1p3",
+   "team": "t1",
+   "name": "Player 12",
+   "num": 8,
+   "pos": "MID"
+  },
+  {
+   "id": "t1p4",
+   "team": "t1",
+   "name": "Player 13",
+   "num": 6,
+   "pos": "MID"
+  },
+  {
+   "id": "t1p5",
+   "team": "t1",
+   "name": "Player 14",
+   "num": 10,
+   "pos": "MID"
+  },
+  {
+   "id": "t1p6",
+   "team": "t1",
+   "name": "Player 15",
+   "num": 9,
+   "pos": "FWD"
+  },
+  {
+   "id": "t1p7",
+   "team": "t1",
+   "name": "Player 16",
+   "num": 11,
+   "pos": "FWD"
+  },
+  {
+   "id": "t2p0",
+   "team": "t2",
+   "name": "Player 17",
+   "num": 1,
+   "pos": "GK"
+  },
+  {
+   "id": "t2p1",
+   "team": "t2",
+   "name": "Player 18",
+   "num": 4,
+   "pos": "DEF"
+  },
+  {
+   "id": "t2p2",
+   "team": "t2",
+   "name": "Player 19",
+   "num": 5,
+   "pos": "DEF"
+  },
+  {
+   "id": "t2p3",
+   "team": "t2",
+   "name": "Player 20",
+   "num": 8,
+   "pos": "MID"
+  },
+  {
+   "id": "t2p4",
+   "team": "t2",
+   "name": "Player 21",
+   "num": 6,
+   "pos": "MID"
+  },
+  {
+   "id": "t2p5",
+   "team": "t2",
+   "name": "Player 22",
+   "num": 10,
+   "pos": "MID"
+  },
+  {
+   "id": "t2p6",
+   "team": "t2",
+   "name": "Player 23",
+   "num": 9,
+   "pos": "FWD"
+  },
+  {
+   "id": "t2p7",
+   "team": "t2",
+   "name": "Player 24",
+   "num": 11,
+   "pos": "FWD"
+  },
+  {
+   "id": "t3p0",
+   "team": "t3",
+   "name": "Player 25",
+   "num": 1,
+   "pos": "GK"
+  },
+  {
+   "id": "t3p1",
+   "team": "t3",
+   "name": "Player 26",
+   "num": 4,
+   "pos": "DEF"
+  },
+  {
+   "id": "t3p2",
+   "team": "t3",
+   "name": "Player 27",
+   "num": 5,
+   "pos": "DEF"
+  },
+  {
+   "id": "t3p3",
+   "team": "t3",
+   "name": "Player 28",
+   "num": 8,
+   "pos": "MID"
+  },
+  {
+   "id": "t3p4",
+   "team": "t3",
+   "name": "Player 29",
+   "num": 6,
+   "pos": "MID"
+  },
+  {
+   "id": "t3p5",
+   "team": "t3",
+   "name": "Player 30",
+   "num": 10,
+   "pos": "MID"
+  },
+  {
+   "id": "t3p6",
+   "team": "t3",
+   "name": "Player 31",
+   "num": 9,
+   "pos": "FWD"
+  },
+  {
+   "id": "t3p7",
+   "team": "t3",
+   "name": "Player 32",
+   "num": 11,
+   "pos": "FWD"
+  },
+  {
+   "id": "t4p0",
+   "team": "t4",
+   "name": "Player 33",
+   "num": 1,
+   "pos": "GK"
+  },
+  {
+   "id": "t4p1",
+   "team": "t4",
+   "name": "Player 34",
+   "num": 4,
+   "pos": "DEF"
+  },
+  {
+   "id": "t4p2",
+   "team": "t4",
+   "name": "Player 35",
+   "num": 5,
+   "pos": "DEF"
+  },
+  {
+   "id": "t4p3",
+   "team": "t4",
+   "name": "Player 36",
+   "num": 8,
+   "pos": "MID"
+  },
+  {
+   "id": "t4p4",
+   "team": "t4",
+   "name": "Player 37",
+   "num": 6,
+   "pos": "MID"
+  },
+  {
+   "id": "t4p5",
+   "team": "t4",
+   "name": "Player 38",
+   "num": 10,
+   "pos": "MID"
+  },
+  {
+   "id": "t4p6",
+   "team": "t4",
+   "name": "Player 39",
+   "num": 9,
+   "pos": "FWD"
+  },
+  {
+   "id": "t4p7",
+   "team": "t4",
+   "name": "Player 40",
+   "num": 11,
+   "pos": "FWD"
+  },
+  {
+   "id": "t5p0",
+   "team": "t5",
+   "name": "Player 41",
+   "num": 1,
+   "pos": "GK"
+  },
+  {
+   "id": "t5p1",
+   "team": "t5",
+   "name": "Player 42",
+   "num": 4,
+   "pos": "DEF"
+  },
+  {
+   "id": "t5p2",
+   "team": "t5",
+   "name": "Player 43",
+   "num": 5,
+   "pos": "DEF"
+  },
+  {
+   "id": "t5p3",
+   "team": "t5",
+   "name": "Player 44",
+   "num": 8,
+   "pos": "MID"
+  },
+  {
+   "id": "t5p4",
+   "team": "t5",
+   "name": "Player 45",
+   "num": 6,
+   "pos": "MID"
+  },
+  {
+   "id": "t5p5",
+   "team": "t5",
+   "name": "Player 46",
+   "num": 10,
+   "pos": "MID"
+  },
+  {
+   "id": "t5p6",
+   "team": "t5",
+   "name": "Player 47",
+   "num": 9,
+   "pos": "FWD"
+  },
+  {
+   "id": "t5p7",
+   "team": "t5",
+   "name": "Player 48",
+   "num": 11,
+   "pos": "FWD"
+  }
+ ],
+ "stats": [
+  {
+   "id": "f1_t0p0",
+   "fixture": "f1",
+   "team": "t0",
+   "player": "t0p0",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f1_t0p1",
+   "fixture": "f1",
+   "team": "t0",
+   "player": "t0p1",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 1,
+   "red": 0
+  },
+  {
+   "id": "f1_t0p2",
+   "fixture": "f1",
+   "team": "t0",
+   "player": "t0p2",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f1_t0p3",
+   "fixture": "f1",
+   "team": "t0",
+   "player": "t0p3",
+   "played": 1,
+   "goals": 1,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f1_t0p4",
+   "fixture": "f1",
+   "team": "t0",
+   "player": "t0p4",
+   "played": 1,
+   "goals": 1,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f1_t0p5",
+   "fixture": "f1",
+   "team": "t0",
+   "player": "t0p5",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f1_t0p6",
+   "fixture": "f1",
+   "team": "t0",
+   "player": "t0p6",
+   "played": 1,
+   "goals": 1,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f1_t0p7",
+   "fixture": "f1",
+   "team": "t0",
+   "player": "t0p7",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f1_t1p0",
+   "fixture": "f1",
+   "team": "t1",
+   "player": "t1p0",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f1_t1p1",
+   "fixture": "f1",
+   "team": "t1",
+   "player": "t1p1",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f1_t1p2",
+   "fixture": "f1",
+   "team": "t1",
+   "player": "t1p2",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 1,
+   "red": 0
+  },
+  {
+   "id": "f1_t1p3",
+   "fixture": "f1",
+   "team": "t1",
+   "player": "t1p3",
+   "played": 1,
+   "goals": 1,
+   "assists": 1,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f1_t1p4",
+   "fixture": "f1",
+   "team": "t1",
+   "player": "t1p4",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 1,
+   "red": 0
+  },
+  {
+   "id": "f1_t1p5",
+   "fixture": "f1",
+   "team": "t1",
+   "player": "t1p5",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f1_t1p6",
+   "fixture": "f1",
+   "team": "t1",
+   "player": "t1p6",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f1_t1p7",
+   "fixture": "f1",
+   "team": "t1",
+   "player": "t1p7",
+   "played": 1,
+   "goals": 1,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f2_t2p0",
+   "fixture": "f2",
+   "team": "t2",
+   "player": "t2p0",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f2_t2p1",
+   "fixture": "f2",
+   "team": "t2",
+   "player": "t2p1",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f2_t2p2",
+   "fixture": "f2",
+   "team": "t2",
+   "player": "t2p2",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f2_t2p3",
+   "fixture": "f2",
+   "team": "t2",
+   "player": "t2p3",
+   "played": 1,
+   "goals": 0,
+   "assists": 1,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f2_t2p4",
+   "fixture": "f2",
+   "team": "t2",
+   "player": "t2p4",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f2_t2p5",
+   "fixture": "f2",
+   "team": "t2",
+   "player": "t2p5",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f2_t2p6",
+   "fixture": "f2",
+   "team": "t2",
+   "player": "t2p6",
+   "played": 1,
+   "goals": 1,
+   "assists": 0,
+   "yellow": 0,
+   "red": 1
+  },
+  {
+   "id": "f2_t2p7",
+   "fixture": "f2",
+   "team": "t2",
+   "player": "t2p7",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f2_t3p0",
+   "fixture": "f2",
+   "team": "t3",
+   "player": "t3p0",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f2_t3p1",
+   "fixture": "f2",
+   "team": "t3",
+   "player": "t3p1",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f2_t3p2",
+   "fixture": "f2",
+   "team": "t3",
+   "player": "t3p2",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f2_t3p3",
+   "fixture": "f2",
+   "team": "t3",
+   "player": "t3p3",
+   "played": 1,
+   "goals": 1,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f2_t3p4",
+   "fixture": "f2",
+   "team": "t3",
+   "player": "t3p4",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f2_t3p5",
+   "fixture": "f2",
+   "team": "t3",
+   "player": "t3p5",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f2_t3p6",
+   "fixture": "f2",
+   "team": "t3",
+   "player": "t3p6",
+   "played": 1,
+   "goals": 0,
+   "assists": 1,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f2_t3p7",
+   "fixture": "f2",
+   "team": "t3",
+   "player": "t3p7",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f3_t4p0",
+   "fixture": "f3",
+   "team": "t4",
+   "player": "t4p0",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 1,
+   "red": 0
+  },
+  {
+   "id": "f3_t4p1",
+   "fixture": "f3",
+   "team": "t4",
+   "player": "t4p1",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f3_t4p2",
+   "fixture": "f3",
+   "team": "t4",
+   "player": "t4p2",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f3_t4p3",
+   "fixture": "f3",
+   "team": "t4",
+   "player": "t4p3",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f3_t4p4",
+   "fixture": "f3",
+   "team": "t4",
+   "player": "t4p4",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f3_t4p5",
+   "fixture": "f3",
+   "team": "t4",
+   "player": "t4p5",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f3_t4p6",
+   "fixture": "f3",
+   "team": "t4",
+   "player": "t4p6",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f3_t4p7",
+   "fixture": "f3",
+   "team": "t4",
+   "player": "t4p7",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f3_t5p0",
+   "fixture": "f3",
+   "team": "t5",
+   "player": "t5p0",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f3_t5p1",
+   "fixture": "f3",
+   "team": "t5",
+   "player": "t5p1",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f3_t5p2",
+   "fixture": "f3",
+   "team": "t5",
+   "player": "t5p2",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f3_t5p3",
+   "fixture": "f3",
+   "team": "t5",
+   "player": "t5p3",
+   "played": 1,
+   "goals": 1,
+   "assists": 0,
+   "yellow": 1,
+   "red": 0
+  },
+  {
+   "id": "f3_t5p4",
+   "fixture": "f3",
+   "team": "t5",
+   "player": "t5p4",
+   "played": 1,
+   "goals": 1,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f3_t5p5",
+   "fixture": "f3",
+   "team": "t5",
+   "player": "t5p5",
+   "played": 1,
+   "goals": 0,
+   "assists": 2,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f3_t5p6",
+   "fixture": "f3",
+   "team": "t5",
+   "player": "t5p6",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f3_t5p7",
+   "fixture": "f3",
+   "team": "t5",
+   "player": "t5p7",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f4_t1p0",
+   "fixture": "f4",
+   "team": "t1",
+   "player": "t1p0",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 1
+  },
+  {
+   "id": "f4_t1p1",
+   "fixture": "f4",
+   "team": "t1",
+   "player": "t1p1",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f4_t1p2",
+   "fixture": "f4",
+   "team": "t1",
+   "player": "t1p2",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f4_t1p3",
+   "fixture": "f4",
+   "team": "t1",
+   "player": "t1p3",
+   "played": 1,
+   "goals": 1,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f4_t1p4",
+   "fixture": "f4",
+   "team": "t1",
+   "player": "t1p4",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f4_t1p5",
+   "fixture": "f4",
+   "team": "t1",
+   "player": "t1p5",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f4_t1p6",
+   "fixture": "f4",
+   "team": "t1",
+   "player": "t1p6",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 1,
+   "red": 1
+  },
+  {
+   "id": "f4_t1p7",
+   "fixture": "f4",
+   "team": "t1",
+   "player": "t1p7",
+   "played": 1,
+   "goals": 1,
+   "assists": 1,
+   "yellow": 1,
+   "red": 0
+  },
+  {
+   "id": "f4_t2p0",
+   "fixture": "f4",
+   "team": "t2",
+   "player": "t2p0",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 1,
+   "red": 0
+  },
+  {
+   "id": "f4_t2p1",
+   "fixture": "f4",
+   "team": "t2",
+   "player": "t2p1",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f4_t2p2",
+   "fixture": "f4",
+   "team": "t2",
+   "player": "t2p2",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f4_t2p3",
+   "fixture": "f4",
+   "team": "t2",
+   "player": "t2p3",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f4_t2p4",
+   "fixture": "f4",
+   "team": "t2",
+   "player": "t2p4",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f4_t2p5",
+   "fixture": "f4",
+   "team": "t2",
+   "player": "t2p5",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f4_t2p6",
+   "fixture": "f4",
+   "team": "t2",
+   "player": "t2p6",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f4_t2p7",
+   "fixture": "f4",
+   "team": "t2",
+   "player": "t2p7",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f5_t3p0",
+   "fixture": "f5",
+   "team": "t3",
+   "player": "t3p0",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f5_t3p1",
+   "fixture": "f5",
+   "team": "t3",
+   "player": "t3p1",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 1,
+   "red": 0
+  },
+  {
+   "id": "f5_t3p2",
+   "fixture": "f5",
+   "team": "t3",
+   "player": "t3p2",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f5_t3p3",
+   "fixture": "f5",
+   "team": "t3",
+   "player": "t3p3",
+   "played": 1,
+   "goals": 1,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f5_t3p4",
+   "fixture": "f5",
+   "team": "t3",
+   "player": "t3p4",
+   "played": 1,
+   "goals": 0,
+   "assists": 2,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f5_t3p5",
+   "fixture": "f5",
+   "team": "t3",
+   "player": "t3p5",
+   "played": 1,
+   "goals": 2,
+   "assists": 1,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f5_t3p6",
+   "fixture": "f5",
+   "team": "t3",
+   "player": "t3p6",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 1,
+   "red": 0
+  },
+  {
+   "id": "f5_t3p7",
+   "fixture": "f5",
+   "team": "t3",
+   "player": "t3p7",
+   "played": 1,
+   "goals": 1,
+   "assists": 1,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f5_t4p0",
+   "fixture": "f5",
+   "team": "t4",
+   "player": "t4p0",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f5_t4p1",
+   "fixture": "f5",
+   "team": "t4",
+   "player": "t4p1",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 1,
+   "red": 0
+  },
+  {
+   "id": "f5_t4p2",
+   "fixture": "f5",
+   "team": "t4",
+   "player": "t4p2",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f5_t4p3",
+   "fixture": "f5",
+   "team": "t4",
+   "player": "t4p3",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f5_t4p4",
+   "fixture": "f5",
+   "team": "t4",
+   "player": "t4p4",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 1,
+   "red": 0
+  },
+  {
+   "id": "f5_t4p5",
+   "fixture": "f5",
+   "team": "t4",
+   "player": "t4p5",
+   "played": 1,
+   "goals": 1,
+   "assists": 0,
+   "yellow": 1,
+   "red": 0
+  },
+  {
+   "id": "f5_t4p6",
+   "fixture": "f5",
+   "team": "t4",
+   "player": "t4p6",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 1,
+   "red": 0
+  },
+  {
+   "id": "f5_t4p7",
+   "fixture": "f5",
+   "team": "t4",
+   "player": "t4p7",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f6_t5p0",
+   "fixture": "f6",
+   "team": "t5",
+   "player": "t5p0",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f6_t5p1",
+   "fixture": "f6",
+   "team": "t5",
+   "player": "t5p1",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 1,
+   "red": 0
+  },
+  {
+   "id": "f6_t5p2",
+   "fixture": "f6",
+   "team": "t5",
+   "player": "t5p2",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f6_t5p3",
+   "fixture": "f6",
+   "team": "t5",
+   "player": "t5p3",
+   "played": 1,
+   "goals": 0,
+   "assists": 1,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f6_t5p4",
+   "fixture": "f6",
+   "team": "t5",
+   "player": "t5p4",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f6_t5p5",
+   "fixture": "f6",
+   "team": "t5",
+   "player": "t5p5",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f6_t5p6",
+   "fixture": "f6",
+   "team": "t5",
+   "player": "t5p6",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 1,
+   "red": 0
+  },
+  {
+   "id": "f6_t5p7",
+   "fixture": "f6",
+   "team": "t5",
+   "player": "t5p7",
+   "played": 1,
+   "goals": 1,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f6_t0p0",
+   "fixture": "f6",
+   "team": "t0",
+   "player": "t0p0",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f6_t0p1",
+   "fixture": "f6",
+   "team": "t0",
+   "player": "t0p1",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f6_t0p2",
+   "fixture": "f6",
+   "team": "t0",
+   "player": "t0p2",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f6_t0p3",
+   "fixture": "f6",
+   "team": "t0",
+   "player": "t0p3",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f6_t0p4",
+   "fixture": "f6",
+   "team": "t0",
+   "player": "t0p4",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f6_t0p5",
+   "fixture": "f6",
+   "team": "t0",
+   "player": "t0p5",
+   "played": 1,
+   "goals": 0,
+   "assists": 1,
+   "yellow": 1,
+   "red": 0
+  },
+  {
+   "id": "f6_t0p6",
+   "fixture": "f6",
+   "team": "t0",
+   "player": "t0p6",
+   "played": 1,
+   "goals": 0,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  },
+  {
+   "id": "f6_t0p7",
+   "fixture": "f6",
+   "team": "t0",
+   "player": "t0p7",
+   "played": 1,
+   "goals": 1,
+   "assists": 0,
+   "yellow": 0,
+   "red": 0
+  }
+ ],
+ "news": [
+  {
+   "id": "season-kicks-off",
+   "title": "Season kicks off",
+   "tag": "League",
+   "date": "2026-09-26",
+   "color": "#ff5a1f",
+   "summary": "Six teams, one trophy. Here is what to expect from the opening weeks.",
+   "body": "Six teams, fifteen matches each and one trophy.\n\nThe K South League is back for another season of fast, loud seven-a-side football in Embakasi West."
+  },
+  {
+   "id": "matchday-2-roundup",
+   "title": "Matchday 2 round-up",
+   "tag": "Report",
+   "date": "2026-10-03",
+   "color": "#2f9e44",
+   "summary": "Baraka put four past 2nd Avenue to go top of the table.",
+   "body": "Baraka won 4-1 against 2nd Avenue.\n\nElland beat Samba Boys 2-0, while Mandem and Civo United FC shared a 1-1 draw."
+  },
+  {
+   "id": "registrations-open",
+   "title": "Registrations open",
+   "tag": "Notice",
+   "date": "2026-10-05",
+   "color": "#1971c2",
+   "summary": "Squads are being confirmed. Managers can register players before matchday 4.",
+   "body": "Team managers can register players before matchday 4.\n\nShirt numbers and positions are on each team page. Player photos are coming next."
+  }
+ ],
+ "site": {
+  "ann": {
+   "on": true,
+   "text": "Matchday 3 is on Saturday 17 October.",
+   "link": "#/matches",
+   "label": "See fixtures"
+  },
+  "promo": {
+   "on": true,
+   "title": "Squads are filling up",
+   "text": "Browse every team's shirt numbers and positions.",
+   "link": "#/teams",
+   "label": "Browse teams",
+   "big": "MD4"
+  },
+  "ribbon": "Seven a side · Embakasi West · Est. 2024"
+ }
+}
