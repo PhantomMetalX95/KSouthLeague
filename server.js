@@ -3,6 +3,7 @@ import express from "express";
 import crypto from "node:crypto";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { registerFantasy, googleVerifier } from "./fantasy.js";
 import { init, readAll, clean, upsert, remove, saveSite, cascade, saveMatchStats, TABLES } from "./db.js";
 
 const app = express();
@@ -47,6 +48,14 @@ app.get("/api/me", admin, (_req, res) => res.json({ ok: true }));
 /* --- public read --- */
 app.get("/api/data", async (_req, res, next) => {
   try { res.set("Cache-Control", "no-store").json(await readAll()); } catch (e) { next(e); }
+});
+
+/* --- fantasy league (Google sign-in) --- */
+registerFantasy(app, {
+  admin,
+  secret: process.env.SESSION_SECRET || "",
+  clientId: process.env.GOOGLE_CLIENT_ID || "",
+  verify: process.env.GOOGLE_CLIENT_ID ? googleVerifier(process.env.GOOGLE_CLIENT_ID) : null,
 });
 
 /* --- admin writes --- */

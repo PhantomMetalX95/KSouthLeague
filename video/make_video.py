@@ -5,7 +5,7 @@ K South League: gameweek round-up video maker.
 Reads a gameweek from your site (or a JSON file), draws a 1080x1920 vertical video
 (intro, one scene per match, results, table, outro), records a voice-over and writes an MP4.
 
-    python make_video.py --api https://k-south-league.vercel.app/api/data --week 3
+    python make_video.py --api https://k-south-league.vercel.app/api/data --week 3 --voice none --music ambient.mp3
     python make_video.py --data sample-data.json --week 2 --voice none
 
 See README.md for setup.
@@ -386,45 +386,45 @@ class Model:
         return sorted(rows.values(), key=lambda r: (-r["pts"], -(r["gf"] - r["ga"]), -r["gf"], r["t"]["name"]))
 
 
-# ----------------------------------------------------------------------------- narration with banter & edge
+# ----------------------------------------------------------------------------- narration with Fantasy League reminder
 
 
 def goal_phrase(lst):
     out = []
     for n, k in lst:
-        out.append(n if k == 1 else n + " twice" if k == 2 else n + " with a massive hat-trick" if k == 3 else "%s with %s absolute goals" % (n, nw(k)))
+        out.append(n if k == 1 else n + " twice, absolutely clinical" if k == 2 else n + " with a proper masterclass hat-trick" if k == 3 else "%s with %s absolute goals" % (n, nw(k)))
     return join(out)
 
 
 def narration(M):
     n = len(M.matches)
     sc = {}
-    sc["intro"] = [("a", "Damn, welcome back to Gameweek %d of the K South League! Let's see who showed up and who completely messed it up." % M.week)]
+    sc["intro"] = [("a", "Welcome back to Gameweek %d of the K South League. Let's review how it all went down." % M.week)]
     for i, m in enumerate(M.matches):
         h, a, hg, ag = m["home"]["name"], m["away"]["name"], m["hg"], m["ag"]
         diff = abs(hg - ag)
         
         if hg > ag:
             if diff >= 3:
-                res = "%s completely destroyed %s, smashing them %s to %s!" % (h, a, nw(hg), nw(ag))
+                res = "%s completely dominated %s, winning %s to %s." % (h, a, nw(hg), nw(ag))
             else:
                 res = "%s held their nerve and beat %s, %s to %s." % (h, a, nw(hg), nw(ag))
         elif ag > hg:
             if diff >= 3:
-                res = "%s went away and absolutely humiliated %s, crushing them %s to %s!" % (a, h, nw(ag), nw(hg))
+                res = "%s went away and convincingly defeated %s, %s to %s." % (a, h, nw(ag), nw(hg))
             else:
-                res = "%s pulled off a sweet away win at %s, taking it %s to %s." % (a, h, nw(ag), nw(hg))
+                res = "%s secured a tight away win at %s, taking it %s to %s." % (a, h, nw(ag), nw(hg))
         elif hg == 0:
-            res = "%s and %s played out a bloody boring goalless draw. Absolute snooze fest." % (h, a)
+            res = "%s and %s played out a goalless draw." % (h, a)
         else:
-            res = "%s and %s shared the points in a wild %s all draw." % (h, a, nw(hg))
+            res = "%s and %s shared the points in a %s all draw." % (h, a, nw(hg))
             
         segs = [("result", ("In match %s, " % nw(i + 1) if n > 1 else "") + res)]
         parts = []
         for t in (m["home"], m["away"]):
             g = m["sides"][t["id"]]["goals"]
             if g:
-                parts.append("%s put in work for %s." % (goal_phrase(g), t["name"]))
+                parts.append("%s scored for %s." % (goal_phrase(g), t["name"]))
         if parts:
             segs.append(("goals", " ".join(parts)))
             
@@ -432,42 +432,42 @@ def narration(M):
         r = [nm for t in (m["home"], m["away"]) for nm, _ in m["sides"][t["id"]]["red"]]
         cs = []
         if len(y) > 4:
-            cs.append("Ref was handing cards out like candy, with %s yellow cards flying around." % nw(len(y)))
+            cs.append("A busy game for the referee with %s yellow cards." % nw(len(y)))
         elif y:
-            cs.append(("A clumsy yellow card for %s." if len(y) == 1 else "Yellow cards handed out to %s.") % join(y))
+            cs.append(("A yellow card for %s." if len(y) == 1 else "Yellow cards for %s.") % join(y))
         if r:
-            cs.append("And damn, %s got sent packing!" % join(r))
+            cs.append("And %s was sent off." % join(r))
         if cs:
             segs.append(("cards", " ".join(cs)))
             
         clean = [t["name"] for t, c in ((m["home"], ag), (m["away"], hg)) if c == 0 and (hg + ag) > 0]
         if clean:
-            segs.append(("cs", "Props to %s for locking down a clean sheet." % join(clean)))
+            segs.append(("cs", "%s secured a clean sheet." % join(clean)))
             
         sc["m%d" % i] = segs
         
-    r = ["Hell of a week. That is %s goals, %s and %s total." % (nw(M.goals), "one lonely yellow card" if M.yellows == 1 else "%s yellow cards" % nw(M.yellows),
-                                                          "zero red cards, boring" if M.reds == 0 else "one red card" if M.reds == 1 else "%s brutal red cards" % nw(M.reds))]
+    r = ["A massive week of action with %s goals, %s, and %s recorded." % (nw(M.goals), "one yellow card" if M.yellows == 1 else "%s yellow cards" % nw(M.yellows),
+                                                          "no red cards" if M.reds == 0 else "one red card" if M.reds == 1 else "%s red cards" % nw(M.reds))]
     if M.top:
-        r.append("Shoutout to %s, absolute baller of the week with %s." % (M.top[0], nw(M.top[1]) + (" goal" if M.top[1] == 1 else " goals")))
+        r.append("Top scorer of the week was %s with %s." % (M.top[0], nw(M.top[1]) + (" goal" if M.top[1] == 1 else " goals")))
     sc["results"] = [("a", " ".join(r))]
     
     t0 = M.table
-    s = ["%s are sitting pretty at the top with %s points." % (t0[0]["t"]["name"], t0[0]["pts"])] if t0[0]["p"] else ["The table is wide open, anybody's game."]
+    s = ["%s lead the table with %s points." % (t0[0]["t"]["name"], t0[0]["pts"])] if t0[0]["p"] else ["The table remains wide open."]
     if len(t0) > 1 and t0[0]["p"]:
-        s.append("%s are chasing hard in second with %s." % (t0[1]["t"]["name"], t0[1]["pts"]))
+        s.append("%s follow in second with %s points." % (t0[1]["t"]["name"], t0[1]["pts"]))
     if M.prev:
         pp = {r["t"]["id"]: i for i, r in enumerate(M.prev)}
         mv = sorted(((pp[r["t"]["id"]] - i, r["t"]["name"], i + 1) for i, r in enumerate(t0)), reverse=True)
         if mv and mv[0][0] > 0:
-            s.append("Watch out, %s made a massive jump up to %s." % (mv[0][1], POS.get(mv[0][2], ordinal(mv[0][2]))))
+            s.append("%s climbed up to %s." % (mv[0][1], POS.get(mv[0][2], ordinal(mv[0][2]))))
     sc["table"] = [("a", " ".join(s))]
     
     if M.next_date:
         dt = datetime.strptime(M.next_date, "%Y-%m-%d")
-        o = "Don't slack off. Gameweek %d is coming up fast on %s the %s of %s. Catch you next time!" % (M.next_week, dt.strftime("%A"), ordinal(dt.day), dt.strftime("%B"))
+        o = "Gameweek %d is coming up on %s the %s of %s. Also, a quick reminder: the K. South Fantasy League is coming soon! Get your teams ready." % (M.next_week, dt.strftime("%A"), ordinal(dt.day), dt.strftime("%B"))
     else:
-        o = "That's it for this round. Keep up with the K South League or get left behind."
+        o = "That is the round-up for this week. Remember, the K. South Fantasy League is coming soon!"
     sc["outro"] = [("a", o)]
     return sc
 
@@ -641,16 +641,16 @@ def scene_outro(M, cta):
     bg = chrome(M.week, header=False)
 
     def draw(im, t, C):
-        put(im, logo(470), W / 2, 520, a=prog(t, .1, .4), s=.6 + .4 * back(prog(t, .1, .9)))
-        put(im, text("THAT'S A WRAP", "d", 170, 900, WHITE), W / 2, 960, a=prog(t, .7, .5))
+        put(im, logo(470), W / 2, 480, a=prog(t, .1, .4), s=.6 + .4 * back(prog(t, .1, .9)))
+        put(im, text("FANTASY LEAGUE COMING SOON", "d", 68, 900, YEL), W / 2, 860, a=prog(t, .5, .5))
         if M.next_week:
-            rb = rrect(W - 200, 210, 18, ORG + (255,))
-            p = ease(prog(t, 1.2, .5))
-            put(im, rb, W / 2, 1260, a=p)
-            put(im, text("NEXT UP: GAMEWEEK %d" % M.next_week, "d", 92, 900, NAVY), W / 2, 1220, a=p)
-            put(im, text(fmt_day(M.next_date), "d", 66, 800, NAVY), W / 2, 1310, a=p)
-        put(im, text(cta, "d", 74, 800, SKY), W / 2, 1530, a=prog(t, 1.8, .5))
-        put(im, text("EMBAKASI WEST", "d", 54, 700, MUT), W / 2, 1625, a=prog(t, 2.0, .5))
+            rb = rrect(W - 200, 180, 18, ORG + (255,))
+            p = ease(prog(t, 1.0, .5))
+            put(im, rb, W / 2, 1140, a=p)
+            put(im, text("NEXT UP: GAMEWEEK %d" % M.next_week, "d", 82, 900, NAVY), W / 2, 1105, a=p)
+            put(im, text(fmt_day(M.next_date), "d", 56, 800, NAVY), W / 2, 1185, a=p)
+        put(im, text(cta, "d", 74, 800, SKY), W / 2, 1430, a=prog(t, 1.6, .5))
+        put(im, text("EMBAKASI WEST", "d", 54, 700, MUT), W / 2, 1535, a=prog(t, 1.8, .5))
     return bg, draw
 
 
@@ -772,11 +772,11 @@ def main():
     src.add_argument("--data", help="a JSON file with the same data (see sample-data.json)")
     ap.add_argument("--week", type=int, help="gameweek number (default: the latest one with results)")
     ap.add_argument("--out", help="output file (default gameweek-N.mp4)")
-    ap.add_argument("--voice", default="auto", choices=["auto", "edge", "kokoro", "sapi", "none"])
+    ap.add_argument("--voice", default="none", choices=["auto", "edge", "kokoro", "sapi", "none"])
     ap.add_argument("--voice-name", help="voice to use, e.g. en-KE-ChilembaNeural (edge) or bm_george (kokoro)")
     ap.add_argument("--rate", default="+6%", help="speaking speed for the edge voice, e.g. +10%%")
     ap.add_argument("--cta", default="FOLLOW K SOUTH LEAGUE", help="line shown on the last screen, e.g. your page name")
-    ap.add_argument("--music", help="optional background music file (mp3/wav) mixed quietly under the voice")
+    ap.add_argument("--music", help="optional background music file (mp3/wav)")
     ap.add_argument("--stills", help="also save a PNG of the end of every scene into this folder")
     ap.add_argument("--no-video", action="store_true", help="only make stills and the script text")
     a = ap.parse_args()
@@ -792,8 +792,8 @@ def main():
         scenes.append(("m%d" % i,) + scene_match(M, i))
     scenes += [("results",) + scene_results(M), ("table",) + scene_table(M), ("outro",) + scene_outro(M, a.cta)]
 
-    print("Recording the voice-over ...")
-    voice = Voice("none" if a.no_video and a.voice == "auto" else a.voice, a.voice_name, a.rate)
+    print("Setting up audio track ...")
+    voice = Voice(a.voice, a.voice_name, a.rate)
     work = Path(tempfile.mkdtemp(prefix="ksl_video_"))
     LEAD, GAP, TAIL = .5, .3, .9
     timeline = []
@@ -805,7 +805,7 @@ def main():
             cues[cue] = t
             clips.append((t, audio))
             t += len(audio) / SR + GAP
-        dur = max(t + TAIL - GAP, 6.0 if name in ("intro", "outro") else 7.0)
+        dur = max(t + TAIL - GAP, 3.0 if name in ("intro", "outro") else 4.0)
         timeline.append((name, bg, draw, cues, clips, dur))
         print("  %-8s %.1fs" % (name, dur))
     (out.with_suffix(".txt")).write_text("\n\n".join("[%s]\n%s" % (n, " ".join(l for _, l in script[n])) for n in script), encoding="utf-8")
@@ -836,8 +836,13 @@ def main():
     audio_in = wav_path
     if a.music:
         mixed = work / "mixed.wav"
-        subprocess.run([ffmpeg_exe(), "-y", "-loglevel", "error", "-i", str(wav_path), "-stream_loop", "-1", "-i", a.music, "-filter_complex",
-                        "[1:a]volume=0.14,aresample=%d,aformat=channel_layouts=mono[m];[0:a][m]amix=inputs=2:duration=first:normalize=0" % SR, "-ar", str(SR), str(mixed)], check=True)
+        if a.voice == "none":
+            # If voice is none, just use the music track directly
+            subprocess.run([ffmpeg_exe(), "-y", "-loglevel", "error", "-stream_loop", "-1", "-i", a.music, "-t", "%.2f" % total, "-ar", str(SR), "-ac", "1", str(mixed)], check=True)
+        else:
+            # Mix voice with background music
+            subprocess.run([ffmpeg_exe(), "-y", "-loglevel", "error", "-i", str(wav_path), "-stream_loop", "-1", "-i", a.music, "-filter_complex",
+                            "[1:a]volume=0.14,aresample=%d,aformat=channel_layouts=mono[m];[0:a][m]amix=inputs=2:duration=first:normalize=0" % SR, "-ar", str(SR), str(mixed)], check=True)
         audio_in = mixed
 
     print("Rendering %d frames ..." % int(total * FPS))
@@ -862,7 +867,7 @@ def main():
     p.stdin.close()
     p.wait()
     shutil.rmtree(work, ignore_errors=True)
-    print("\nDone: %s  (%.0fs). Voice-over text: %s" % (out, total, out.with_suffix(".txt")))
+    print("\nDone: %s  (%.0fs)." % (out, total))
 
 
 if __name__ == "__main__":
