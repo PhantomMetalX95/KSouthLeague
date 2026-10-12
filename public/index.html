@@ -619,14 +619,14 @@ gameweeks(a){const W=weeks(),B=banner("GW","Gameweeks","Every matchday with scor
 
 glory(){const L=[...D.glory].sort((a,b)=>String(b.season).localeCompare(String(a.season),undefined,{numeric:true})),
   B=banner("GLORY","Glory","The roll of honour: every champion of the K South League.",null,null,"th-glory",`<div class="gtrophy">${TROPHY}</div>`);
- if(!L.length)return B+`<main class="w"><section><div class="empty">Past winners will appear here. They're added in Admin under Glory.</div></section></main>`;
+ if(!L.length)return B+`<main class="w"><section><div class="empty">A section to honour past winners.<li>Coming Soon</li></div></section></main>`;
  const cnt={};L.forEach(g=>{const c=champ(g),k=c.id||"n:"+c.name;(cnt[k]=cnt[k]||{c,n:0}).n++});
  const most=Object.values(cnt).sort((a,b)=>b.n-a.n||a.c.name.localeCompare(b.c.name));
  return B+`<main class="w"><section><div class="hd"><h2>Most titles</h2></div><div class="gtitles">${most.map(m=>`<div class="gt" style="--c:${esc(m.c.c)}">${crest(m.c)}<span>${esc(m.c.name)}</span><b>${m.n}</b></div>`).join("")}</div></section>
  <section><div class="hd"><h2>Roll of honour</h2></div><div class="gl-list">${L.map((g,i)=>glCard(g,i===0)).join("")}</div></section></main>`},
 champions(){const cs=D.site.cl||{},L=D.cl,
   B=banner("UCL","Champions League",(cs.season?cs.season+"  ·  ":"")+"The league's own cup: a league phase, then knockouts.",null,null,"th-ucl",STARBALL);
- if(!L.length)return B+`<div class="clw th-ucl"><main class="w"><section><div class="empty">The draw hasn't been made yet. Matches appear here once they're added in Admin.</div></section></main></div>`;
+ if(!L.length)return B+`<div class="clw th-ucl"><main class="w"><section><div class="empty">The Champions League draw is coming soon</div></section></main></div>`;
  const fin=[...L].filter(m=>m.stage==="Final"&&clWinner(m))[0],cw=fin?T(clWinner(fin)):null;
  const hero=cw?`<div class="chm" style="--c:${esc(cw.c)}">${TROPHY}<div><span class="tag">${esc(cs.season||"")} Champions League winners</span><h2>${esc(cw.name)}</h2></div>${glBadge(cw)}</div>`:"";
  return B+`<div class="clw th-ucl"><main class="w"><section>${hero}<div class="tabs"><button role="tab" data-cv="table" aria-selected="${CV==="table"}">League phase</button><button role="tab" data-cv="ko" aria-selected="${CV==="ko"}">Knockouts</button><button role="tab" data-cv="all" aria-selected="${CV==="all"}">All matches</button></div><div id="cv"></div></section></main></div>`},
