@@ -136,10 +136,21 @@ export function computeState({ fixtures, players, stats, users, teamRows, meId, 
     for (const wkk of A.weeks) { const v = A.pts.get(wkk.n + "|" + p.id); if (v != null) { w[wkk.n] = v; t += v; } }
     pp[p.id] = { t, w };
   }
-  const board = users.filter((u) => u.teamName).map((u) => {
-    const s = season(rowsBy.get(u.id) || [], A);
-    return { team: u.teamName, mgr: u.name, total: s.total, w: Object.fromEntries(Object.entries(s.weeks).map(([n, v]) => [n, v.pts])), me: u.id === meId };
-  }).sort((a, b) => b.total - a.total || a.team.localeCompare(b.team));
+  const seasons = users.filter((u) => u.teamName).map((u) => ({ u, s: season(rowsBy.get(u.id) || [], A) }));
+  const board = seasons.map(({ u, s }) => ({ team: u.teamName, mgr: u.name, total: s.total, w: Object.fromEntries(Object.entries(s.weeks).map(([n, v]) => [n, v.pts])), me: u.id === meId }))
+    .sort((a, b) => b.total - a.total || a.team.localeCompare(b.team));
+  /* The highest-scoring team of each gameweek is public once that gameweek's deadline has passed (never before). */
+  const top = {};
+  for (const w of A.weeks) {
+    if (w.status === "upcoming" || w.deadline > now) continue;
+    let best = null;
+    for (const c of seasons) {
+      const x = c.s.weeks[w.n];
+      if (!x) continue;
+      if (!best || x.pts > best.x.pts || (x.pts === best.x.pts && (c.s.total > best.s.total || (c.s.total === best.s.total && c.u.teamName.localeCompare(best.u.teamName) < 0)))) best = { ...c, x };
+    }
+    if (best) top[w.n] = { team: best.u.teamName, mgr: best.u.name, ...best.x };
+  }
   let me = null;
   const u = users.find((x) => x.id === meId);
   if (u) {
@@ -149,7 +160,7 @@ export function computeState({ fixtures, players, stats, users, teamRows, meId, 
     const s = season(mine, A);
     me = { teamName: u.teamName, mgr: u.name, needsName: !u.teamName, team, base: prev ? prev.picks : null, weeks: s.weeks, total: s.total };
   }
-  return { cfg: CFG, weeks: A.weeks.map((w) => ({ n: w.n, deadline: new Date(w.deadline).toISOString(), status: w.status, done: w.done, total: w.total })), openWeek, pp, board, me };
+  return { cfg: CFG, weeks: A.weeks.map((w) => ({ n: w.n, deadline: new Date(w.deadline).toISOString(), status: w.status, done: w.done, total: w.total })), openWeek, pp, board, top, me };
 }
 
 /* ---------------------------------------------------------------- API */

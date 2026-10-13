@@ -301,6 +301,28 @@ th[data-sk]{cursor:pointer;user-select:none;white-space:nowrap}th.srt{color:var(
 .mr{display:flex;align-items:center;gap:12px;padding:9px 0;border-top:1px solid var(--line)}.mr .cr{width:34px;height:34px;font-size:14px;flex:none}
 .mr .mp{text-align:right;min-width:62px}.mr .mp b{font-weight:700;font-size:14px}
 .rl{padding-left:18px;display:grid;gap:6px}
+.ftri{display:grid;grid-template-columns:1fr 1.4fr 1fr;gap:12px;margin:6px 0 16px}
+.ft{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 14px;text-align:center;display:flex;flex-direction:column;justify-content:center}
+.ft span{color:var(--mut);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.ft b{font:900 56px/1 "Big Shoulders Display",sans-serif;margin:6px 0}.ft small{color:var(--mut);font-size:13px}
+.ft.mid{background:linear-gradient(160deg,#0f5a37,#116b41);border:0;color:#fff;box-shadow:0 10px 26px rgba(15,90,55,.35)}
+.ft.mid span,.ft.mid small{color:#d8f5e4}.ft.mid b{font-size:88px}
+@media(max-width:620px){.ftri{grid-template-columns:1fr 1fr}.ft.mid{grid-column:1/-1;order:-1}}
+.fdl{background:var(--card);border:1px solid var(--line);border-left:6px solid #ff5a1f;border-radius:12px;padding:12px 16px;margin:4px 0 14px}
+.fact{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.fcard{display:flex;align-items:center;gap:14px;text-align:left;background:var(--card);border:2px solid var(--line);border-radius:14px;padding:18px 20px;cursor:pointer;color:inherit;font:inherit}
+.fcard:hover{border-color:var(--org);transform:translateY(-2px);transition:.15s}
+.fcard .fi{width:54px;flex:none}.fcard b{font:900 32px/1 "Big Shoulders Display",sans-serif;display:block}
+.fcard small{color:var(--mut);display:block;margin-top:5px}.fcard i{margin-left:auto;font-size:32px;font-style:normal;color:var(--org)}
+.jy .pp{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:#ffd21f;color:#0d1a4a;font:800 10px Archivo,sans-serif;font-style:normal;padding:1px 7px;border-radius:99px;white-space:nowrap;z-index:2;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.pitch2.tx{padding-top:34px}.bench.tx{padding-top:46px}.bench.tx .jy .bt{top:-34px}
+.seg{display:inline-flex;gap:4px;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:4px;margin-bottom:14px}
+.seg button{border:0;background:transparent;font-weight:700;padding:8px 20px;border-radius:99px;cursor:pointer;color:var(--tx)}
+.seg button[aria-selected=true]{background:var(--org);color:#fff}.seg button[disabled]{opacity:.45;cursor:not-allowed}
+button.ft{appearance:none;font:inherit;color:var(--tx);cursor:pointer}
+button.ft.mid{color:#fff}button.ft:hover{border-color:var(--org);transform:translateY(-2px);transition:.15s}
+.ft .go{font-style:normal;font-size:12px;font-weight:700;margin-top:8px;color:var(--org)}.ft.mid .go{color:#ffd9b8}
+.mj{width:40px;flex:none}.mj svg{width:100%;height:auto;display:block}
 /* admin */
 .ed{display:grid;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;align-content:start}
 .ed label{font-weight:700;font-size:14px;display:grid;gap:4px}
@@ -465,18 +487,18 @@ function clInit(){document.querySelectorAll("[data-cv]").forEach(b=>b.onclick=()
 
 /* ---------- fantasy ---------- */
 const FAN_DEMO=null;
-let FAN={cfg:null,st:null,tok:null,tab:"team",draft:null,sel:null,mk:null,gw:null,bw:null,msg:"",demo:false};
+let FAN={cfg:null,st:null,tok:null,tab:"home",sub:"pick",hw:null,tw:null,draft:null,sel:null,mk:null,gw:null,bw:null,msg:"",demo:false};
 try{FAN.tok=localStorage.getItem("ksl_fan")}catch(e){}
 const fanTok=t=>{FAN.tok=t;try{t?localStorage.setItem("ksl_fan",t):localStorage.removeItem("ksl_fan")}catch(e){}};
 async function fapi(m,p,b){const r=await fetch("/api/fantasy"+p,{method:m,headers:{"Content-Type":"application/json",...(FAN.tok?{Authorization:"Bearer "+FAN.tok}:{})},body:b?JSON.stringify(b):undefined});let j={};try{j=await r.json()}catch(e){}
  if(!r.ok)throw Object.assign(new Error(j.error||"Request failed ("+r.status+")"),{status:r.status});return j}
 const TPL=["GK","DEF","DEF","MID","MID","MID","FWD","GK","DEF","FWD"],POSN={GK:"goalkeeper",DEF:"defender",MID:"midfielder",FWD:"forward"};
 const pl=id=>D.players.find(p=>p.id===id),fprice=id=>(pl(id)&&pl(id).price)||0,ksh=n=>"KSh "+Math.round(n).toLocaleString("en-KE");
-const fvalue=ids=>ids.reduce((s,id)=>s+(id?fprice(id):0),0),full=d=>d.picks.every(Boolean);
+const fvalue=ids=>ids.reduce((s,id)=>s+(id?fprice(id):0),0),full=d=>d.picks.every(Boolean),fanMode=()=>full(FAN.draft)?FAN.sub:"transfer";
 const FANJ='<svg class="fj" viewBox="0 0 64 58" aria-hidden="true"><path d="M20 3 2 13l8 13 7-4v33h30V22l7 4 8-13L44 3c-2 6-7 9-12 9S22 9 20 3z" fill="#ff5a1f" stroke="#fff" stroke-width="2"/><text x="32" y="40" text-anchor="middle" font-size="26" font-weight="900" fill="#fff" font-family="Big Shoulders Display,Impact,sans-serif">10</text></svg>';
 function fanReset(keepMsg){const t=FAN.st&&FAN.st.me&&FAN.st.me.team;FAN.draft=t?{picks:[...t.picks],captain:t.captain,vice:t.vice}:{picks:Array(10).fill(null),captain:null,vice:null};FAN.sel=null;FAN.mk=null;if(!keepMsg)FAN.msg="";
  const me=FAN.st&&FAN.st.me,ws=me?Object.keys(me.weeks).map(Number).sort((a,b)=>a-b):[];FAN.gw=ws.length?ws[ws.length-1]:null;
- const bs=FAN.st?FAN.st.weeks.filter(w=>w.status!=="upcoming").map(w=>w.n):[];FAN.bw=bs.length?bs[bs.length-1]:0}
+ const bs=FAN.st?FAN.st.weeks.filter(w=>w.status!=="upcoming").map(w=>w.n):[];FAN.bw=bs.length?bs[bs.length-1]:0;FAN.hw=bs.length?bs[bs.length-1]:null;const tws=Object.keys((FAN.st&&FAN.st.top)||{}).map(Number).sort((a,b)=>a-b);FAN.tw=tws.length?tws[tws.length-1]:null}
 async function fanLoad(){
  if(FAN_DEMO){FAN.cfg=FAN_DEMO.config;FAN.st=FAN_DEMO.state;FAN.demo=true;fanReset();return}
  FAN.cfg=await fapi("GET","/config");FAN.st=null;if(!FAN.cfg.enabled)return;
@@ -491,12 +513,43 @@ function canPick(i,id){const d=FAN.draft,c=FAN.st.cfg,p=pl(id),out=d.picks[i];
 function fanStats(){const d=FAN.draft,c=FAN.st.cfg,base=FAN.st.me.base,changed=base?d.picks.filter(x=>x&&!base.includes(x)).length:0;
  return {value:fvalue(d.picks),bank:c.budget-fvalue(d.picks),changed,hits:base?Math.max(0,changed-c.freeTransfers)*c.hitCost:0,count:d.picks.filter(Boolean).length}}
 const fanTxt=c=>{const h=(c||"#888").replace("#","");const r=parseInt(h.slice(0,2),16)||0,g=parseInt(h.slice(2,4),16)||0,b=parseInt(h.slice(4,6),16)||0;return .299*r+.587*g+.114*b>150?"#111":"#fff"};
+/* team kits, drawn from each club's logo */
+const SHIRT="M20 3 2 13l8 13 7-4v33h30V22l7 4 8-13L44 3c-2 6-7 9-12 9S22 9 20 3z",NECK="M20 3c2 6 7 9 12 9s10-3 12-9";
+const cuffs=(c,w)=>`<path d="M2 13l8 13M62 13l-8 13" stroke="${c}" stroke-width="${w}" fill="none"/>`,neck=(c,w)=>`<path d="${NECK}" stroke="${c}" stroke-width="${w}" fill="none"/>`,base=c=>`<rect width="64" height="58" fill="${c}"/>`;
+const KITS={
+ /* Civo United: black with gold wings, like the badge */
+ civo:()=>({art:base("#0b0b0c")+'<path d="M17 27L32 41v5L17 32zM17 37l12 12v4L17 42zM47 27L32 41v5l15-14zM47 37L35 49v4l12-11z" fill="#d4a64a"/>'+cuffs("#d4a64a",5)+neck("#d4a64a",3.5),ny:35,fs:17,nc:"#ffffff"}),
+ /* Elland: red with the white oval ring from the crest */
+ elland:()=>({art:base("#e30000")+cuffs("#ffffff",5)+neck("#ffffff",3)+'<ellipse cx="32" cy="35" rx="12.5" ry="9.5" fill="none" stroke="#fff" stroke-width="1.7"/><ellipse cx="32" cy="35" rx="10.3" ry="7.4" fill="none" stroke="#fff" stroke-width=".7"/>',ny:40,fs:14,nc:"#ffffff"}),
+ /* Samba Boys: grey facets, black sleeves and a chequered hem like the banner */
+ samba:()=>({art:base("#eef0f2")+'<path d="M17 12h30v18L17 22z" fill="#dfe2e6"/><path d="M17 22l30 8v25H40z" fill="#cfd3d8"/><path d="M17 22l23 33H17z" fill="#f8f9fa"/><path d="M20 3 2 13l8 13 7-4zM44 3l18 10-8 13-7-4z" fill="#0b0b0c"/>'+cuffs("#eef0f2",3)+neck("#0b0b0c",3.2)+Array.from({length:8},(_,i)=>`<rect x="${17+i*3.75}" y="${i%2?53:51}" width="3.75" height="2" fill="#0b0b0c"/>`).join(""),ny:36,fs:17,nc:"#0b0b0c"}),
+ /* Baraka: lion gold with the black shield from the crest */
+ baraka:()=>({art:base("#edbc3f")+cuffs("#0b0b0b",5)+neck("#0b0b0b",3.5)+'<path d="M23.5 22h17v13.5c0 4.5-4 8-8.5 10-4.5-2-8.5-5.5-8.5-10z" fill="#0b0b0b" stroke="#fff" stroke-width=".9"/>',ny:36,fs:14,nc:"#edbc3f"}),
+ /* 2nd Avenue: asphalt black with the white speed streaks */
+ avenue:()=>({art:base("#0b0b0d")+'<path d="M17 44l30-6v2.4L17 46.4zM17 48.2l30-6v2.4L17 50.6zM17 52.4l30-6V49L17 54.8z" fill="#fff"/>'+cuffs("#ffffff",4)+neck("#ffffff",3),ny:36,fs:18,nc:"#ffffff"}),
+ /* Mandem: street black with the gold crown and a white brush stroke */
+ mandem:()=>({art:base("#070707")+'<path d="M26.5 22.5l1.2-6 2.6 3.4L32 15.5l1.7 4.4 2.6-3.4 1.2 6z" fill="#daa33f"/><path d="M17 45.5l5-1 5 1.5 6-1.2 6 1.2 5-1 3 .8v4.7l-4 1-5-1.2-6 1.5-6-1.3-5 1.1-4-1z" fill="#fff"/><path d="M17 53l30-2.5v2.8L17 55.4z" fill="#daa33f"/>'+cuffs("#ffffff",4)+neck("#daa33f",3),ny:36,fs:15,nc:"#ffffff"}),
+ def:t=>({art:base(t.c||"#888")+cuffs("rgba(255,255,255,.6)",4)+neck("#ffffff",2.5),ny:38,fs:20,nc:fanTxt(t.c)})};
+function kit(t,num){const k=(KITS[t.theme]||KITS.def)(t);
+ return `<svg viewBox="0 0 64 58"><defs><clipPath id="kc"><path d="${SHIRT}"/></clipPath></defs><g clip-path="url(#kc)">${k.art}</g><path d="${SHIRT}" fill="none" stroke="rgba(0,0,0,.45)" stroke-width="2"/><text x="32" y="${k.ny}" text-anchor="middle" font-size="${k.fs}" font-weight="900" fill="${k.nc}" font-family="Big Shoulders Display,Impact,sans-serif">${num??""}</text></svg>`}
+function lineupHTML(w){const cfg=FAN.st.cfg,bench=w.picks.slice(7).map(id=>{const s=w.subs.find(x=>x.in===id);return s?s.out:id}),subIn=new Set(w.subs.map(s=>s.in)),subOut=new Set(w.subs.map(s=>s.out));
+ const sub=id=>`${(w.per[id]||0)*(id===w.cap?cfg.captain:1)} pts${id===w.cap?" (×"+cfg.captain+")":""}${subIn.has(id)?" ↑":subOut.has(id)?" ↓":""}`;
+ return pitchHTML([...w.start,...bench],{cap:w.cap,vice:w.vice,sub})+(w.subs.length?`<p class="hint" style="margin-top:10px">Auto-subs: ${w.subs.map(s=>esc(pl(s.in).name)+" came on for "+esc(pl(s.out).name)).join(", ")}.</p>`:"")}
+function fanTopTab(){const st=FAN.st,ws=Object.keys(st.top||{}).map(Number).sort((a,b)=>a-b),back='<p style="margin-bottom:12px"><button class="btn o" data-act="tab" data-k="home" style="padding:7px 16px">‹ Back to Home</button></p>';
+ if(!ws.length)return back+'<div class="empty">The highest-scoring team appears here once a gameweek has passed its deadline.</div>';
+ const n=ws.includes(FAN.tw)?FAN.tw:ws[ws.length-1],w=st.top[n];
+ return back+`<div class="wkbar">${ws.map(x=>`<a href="#/fantasy" data-act="tw" data-n="${x}" class="${x===n?"on":""}">${x}</a>`).join("")}</div>
+ <div class="hd"><h2>${esc(w.team)}</h2><span class="dt" style="margin:0 0 6px">${esc(w.mgr)} · highest score of Gameweek ${n}</span></div>
+ <div class="stats"><div><b>${w.pts}</b><span>Gameweek ${n}</span></div><div><b>${w.hits?"−"+w.hits:0}</b><span>Transfer cost</span></div></div>`+lineupHTML(w)}
+function nextFix(tid){const f=upcoming().find(x=>x.home===tid||x.away===tid);if(!f)return null;const home=f.home===tid;return {opp:T(home?f.away:f.home).short||"?",ha:home?"H":"A",f}}
 function jersey(id,i,o){o=o||{};const p=id?pl(id):null;
  if(!p)return `<button class="jy empty" data-act="slot" data-i="${i}" aria-label="Pick a ${POSN[TPL[i]]}"><svg viewBox="0 0 64 58"><path d="M20 3 2 13l8 13 7-4v33h30V22l7 4 8-13L44 3c-2 6-7 9-12 9S22 9 20 3z" fill="rgba(255,255,255,.12)" stroke="#fff" stroke-dasharray="4 3" stroke-width="2"/><text x="32" y="36" text-anchor="middle" font-size="22" font-weight="900" fill="#fff">+</text></svg><span class="nm">${TPL[i]}</span></button>`;
- const t=T(p.team),col=t.c||"#888",nm=p.name.split(" ").slice(-1)[0];
- return `<button class="jy ${o.sel===i?"on":""}" data-act="slot" data-i="${i}">${o.tag?`<small class="bt">${o.tag}</small>`:""}<svg viewBox="0 0 64 58"><path d="M20 3 2 13l8 13 7-4v33h30V22l7 4 8-13L44 3c-2 6-7 9-12 9S22 9 20 3z" fill="${esc(col)}" stroke="rgba(0,0,0,.4)" stroke-width="2"/><text x="32" y="38" text-anchor="middle" font-size="20" font-weight="900" fill="${fanTxt(col)}" font-family="Big Shoulders Display,Impact,sans-serif">${p.num??""}</text></svg>${o.cap===id?'<i class="bgc c">C</i>':o.vice===id?'<i class="bgc v">V</i>':""}<span class="nm">${esc(nm)}</span><span class="sb2">${o.sub?o.sub(id):ksh(p.price||0)}</span></button>`}
+ const t=T(p.team),col=t.c||"#888",nm=p.name.split(" ").slice(-1)[0],nf=nextFix(p.team);
+ const fx=nf?`${esc(nf.opp)} (${nf.ha})`:"–",ft=nf?"Next: "+nf.opp+", "+(nf.ha==="H"?"home":"away")+", "+fmtDay(nf.f.date)+(nf.f.time?" "+nf.f.time:""):"No fixture scheduled";
+ return `<button class="jy ${o.sel===i?"on":""}" data-act="slot" data-i="${i}">${o.tag?`<small class="bt">${o.tag}</small>`:""}${o.price?`<i class="pp">${ksh(p.price||0)}</i>`:""}${kit(t,p.num)}${o.cap===id?'<i class="bgc c">C</i>':o.vice===id?'<i class="bgc v">V</i>':""}<span class="nm">${esc(nm)}</span><span class="sb2" title="${esc(ft)}">${o.sub?o.sub(id):fx}</span></button>`}
+
 function pitchHTML(slots,o){const rows=["GK","DEF","MID","FWD"].map(pos=>slots.slice(0,7).map((id,i)=>[id,i]).filter(([id,i])=>id?pl(id).pos===pos:TPL[i]===pos));
- return `<div class="pitch2">${rows.map(r=>`<div class="pr">${r.map(([id,i])=>jersey(id,i,o)).join("")}</div>`).join("")}</div><div class="bench"><b>Bench</b>${slots.slice(7).map((id,k)=>jersey(id,7+k,{...o,tag:["GK","SUB 1","SUB 2"][k]})).join("")}</div>`}
+ return `<div class="pitch2 ${o&&o.price?"tx":""}">${rows.map(r=>`<div class="pr">${r.map(([id,i])=>jersey(id,i,o)).join("")}</div>`).join("")}</div><div class="bench ${o&&o.price?"tx":""}"><b>Bench</b>${slots.slice(7).map((id,k)=>jersey(id,7+k,{...o,tag:["GK","SUB 1","SUB 2"][k]})).join("")}</div>`}
 const fanWhen=iso=>new Date(iso).toLocaleString("en-GB",{timeZone:"Africa/Nairobi",weekday:"short",day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"});
 const fanLeft=iso=>{const ms=new Date(iso)-Date.now();if(ms<=0)return "now";const m=Math.floor(ms/6e4),d=Math.floor(m/1440),h=Math.floor(m%1440/60);return "in "+(d?d+"d ":"")+h+"h "+(m%60)+"m"};
 function marketHTML(){const m=FAN.mk,d=FAN.draft,out=d.picks[m.i],need=out?pl(out).pos:TPL[m.i];
@@ -505,32 +558,61 @@ function marketHTML(){const m=FAN.mk,d=FAN.draft,out=d.picks[m.i],need=out?pl(ou
 function marketList(){const m=FAN.mk,d=FAN.draft,out=d.picks[m.i],need=out?pl(out).pos:TPL[m.i],pp=FAN.st.pp;
  let L=D.players.filter(p=>p.pos===need&&!d.picks.includes(p.id));if(m.f.club)L=L.filter(p=>p.team===m.f.club);if(m.f.q)L=L.filter(p=>p.name.toLowerCase().includes(m.f.q.toLowerCase()));
  L.sort((a,b)=>m.f.sort==="price"?(b.price||0)-(a.price||0):((pp[b.id]||{}).t||0)-((pp[a.id]||{}).t||0)||a.name.localeCompare(b.name));
- const el=$("#ml2");if(!el)return;el.innerHTML=L.slice(0,40).map(p=>{const why=canPick(m.i,p.id),t=T(p.team);return `<div class="mr"><span class="cr" style="background:${esc(t.c)};color:${fanTxt(t.c)}">${p.num??""}</span><span style="flex:1;min-width:0"><b>${esc(p.name)}</b><small class="mt">${esc(t.name)} · ${p.pos}</small></span><span class="mp"><b>${(pp[p.id]||{}).t||0}</b><small class="mt">pts</small></span><span class="mp"><b>${ksh(p.price||0)}</b></span><button class="btn" data-act="pick" data-id="${esc(p.id)}" style="padding:7px 14px" ${why?"disabled":""} title="${esc(why)}">${why&&why!=="Over budget"?esc(why):why?"Over budget":"Pick"}</button></div>`}).join("")||'<p class="hint">No players match.</p>'}
+ const el=$("#ml2");if(!el)return;el.innerHTML=L.slice(0,40).map(p=>{const why=canPick(m.i,p.id),t=T(p.team);return `<div class="mr"><span class="mj">${kit(t,p.num)}</span><span style="flex:1;min-width:0"><b>${esc(p.name)}</b><small class="mt">${esc(t.name)} · ${p.pos}</small></span><span class="mp"><b>${(pp[p.id]||{}).t||0}</b><small class="mt">pts</small></span><span class="mp"><b>${ksh(p.price||0)}</b></span><button class="btn" data-act="pick" data-id="${esc(p.id)}" style="padding:7px 14px" ${why?"disabled":""} title="${esc(why)}">${why&&why!=="Over budget"?esc(why):why?"Over budget":"Pick"}</button></div>`}).join("")||'<p class="hint">No players match.</p>'}
+function fanNameForm(){return `<form class="ed" id="fn" style="max-width:460px" onsubmit="return false"><b>Name your team</b><label>Team name<input id="tn" maxlength="24" placeholder="e.g. Embakasi Galacticos"></label><button class="btn" data-act="name">Start playing</button><p class="msg">${esc(FAN.msg)}</p></form>`}
+function fanSummary(n){const B=FAN.st.board.filter(b=>b.w[n]!==undefined);if(!B.length)return null;
+ const hi=B.reduce((a,b)=>b.w[n]>a.w[n]?b:a);return {B,n:B.length,hi,avg:Math.round(B.reduce((s,b)=>s+b.w[n],0)/B.length*10)/10}}
+const MINIJ='<svg class="fi" viewBox="0 0 64 58" aria-hidden="true"><path d="M20 3 2 13l8 13 7-4v33h30V22l7 4 8-13L44 3c-2 6-7 9-12 9S22 9 20 3z" fill="#ff5a1f" stroke="rgba(0,0,0,.35)" stroke-width="2"/></svg>';
+function fanHomeTab(){const st=FAN.st,me=st.me,c=st.cfg;
+ if(me&&me.needsName)return fanNameForm();
+ const started=st.weeks.filter(w=>w.status!=="upcoming"),n=started.some(w=>w.n===FAN.hw)?FAN.hw:(started.length?started[started.length-1].n:null),wk=n?st.weeks.find(w=>w.n===n):null;
+ const sum=n?fanSummary(n):null,mine=me&&n&&me.weeks[n]?me.weeks[n].pts:null,rank=sum&&mine!=null?1+sum.B.filter(b=>b.w[n]>mine).length:null;
+ const scored=st.board.filter(b=>Object.keys(b.w).length),avgTot=scored.length?Math.round(scored.reduce((s,b)=>s+b.total,0)/scored.length*10)/10:null,lead=scored[0],myRank=me?scored.findIndex(b=>b.me)+1:0;
+ const open=st.weeks.find(w=>w.n===st.openWeek),mineGo=!!(me&&mine!=null),topGo=!!(sum&&st.top&&st.top[n]);let h="";
+ h+=n?`<div class="hd"><h2>Gameweek ${n}</h2><span class="dt" style="margin:0 0 6px">${wk.status==="done"?"Final points":"In progress: "+wk.done+" of "+wk.total+" matches"}</span></div>
+ <div class="wkbar">${started.map(w=>`<a href="#/fantasy" data-act="hw" data-n="${w.n}" class="${w.n===n?"on":""}">${w.n}</a>`).join("")}</div>`
+ :'<div class="hd"><h2>Gameweek summary</h2></div><p class="hint" style="margin-bottom:10px">The season hasn\'t started yet. Points, the league average and the top score appear here after the first gameweek.</p>';
+ h+=`<div class="ftri"><div class="ft"><span>Average</span><b>${sum?sum.avg:"–"}</b><small>${sum?"across "+sum.n+" manager"+(sum.n===1?"":"s"):"No scores yet"}</small></div>
+ ${mineGo?`<button class="ft mid" data-act="viewme" data-n="${n}">`:'<div class="ft mid">'}<span>${me?"Your points":"Your team"}</span><b>${me?(mine!=null?mine:"–"):"–"}</b><small>${me?(rank?"Ranked "+rank+" of "+sum.n+" this week":n?"No score this week":"Pick a team to play"):"Sign in to play"}</small>${mineGo?'<em class="go">View your team ›</em></button>':"</div>"}
+ ${topGo?`<button class="ft" data-act="viewtop" data-n="${n}">`:'<div class="ft">'}<span>Highest</span><b>${sum?sum.hi.w[n]:"–"}</b><small>${sum?esc(sum.hi.team)+" · "+esc(sum.hi.mgr):"No scores yet"}</small>${topGo?'<em class="go">View their team ›</em></button>':"</div>"}</div>
+ <div class="fbar">${me?`<div><span>Your total</span><b>${me.total}</b><small>${myRank?"Ranked "+myRank+" of "+scored.length:"Not ranked yet"}</small></div>`:""}<div><span>League average</span><b>${avgTot!=null?avgTot:"–"}</b><small>Season total per manager</small></div><div><span>Leader</span><b>${lead?lead.total:"–"}</b><small>${lead?esc(lead.team):"No scores yet"}</small></div></div>`;
+ if(!me)return h;
+ const s=fanStats(),has=!!me.team;
+ h+=`<div class="fdl"><b>${open?"Gameweek "+open.n+" deadline":"Season finished"}</b>${open?` ${fanWhen(open.deadline)} · ${fanLeft(open.deadline)}`:""}</div>
+ <div class="fact"><button class="fcard" data-act="team" data-sub="pick">${MINIJ}<span><b>Pick Team</b><small>${has?"Set your starting seven, bench and captain":"Choose your "+c.squad+" players to join in"}</small></span><i>›</i></button>
+ <button class="fcard" data-act="team" data-sub="transfer">${MINIJ}<span><b>Transfers</b><small>${has?(me.base?s.changed+" of "+c.freeTransfers+" free transfers used · Bank "+ksh(s.bank):"Bank "+ksh(s.bank)+" · first team is free"):"Build your squad first · Budget "+ksh(c.budget)}</small></span><i>›</i></button></div>`;
+ return h}
 function fanTeamTab(){const me=FAN.st.me,st=FAN.st,d=FAN.draft,s=fanStats(),wk=st.weeks.find(w=>w.n===st.openWeek),c=st.cfg;
- if(me.needsName)return `<form class="ed" id="fn" style="max-width:460px" onsubmit="return false"><b>Name your team</b><label>Team name<input id="tn" maxlength="24" placeholder="e.g. Embakasi Galacticos"></label><button class="btn" data-act="name">Start playing</button><p class="msg">${esc(FAN.msg)}</p></form>`;
+ if(me.needsName)return fanNameForm();
  if(st.openWeek==null)return '<div class="empty">The season has finished, so teams are locked.</div>';
+ const isFull=full(d),tx=fanMode()==="transfer";
  const dirty=JSON.stringify([d.picks,d.captain,d.vice])!==JSON.stringify(me.team?[me.team.picks,me.team.captain,me.team.vice]:[Array(10).fill(null),null,null]);
  const selP=FAN.sel!=null&&d.picks[FAN.sel]?pl(d.picks[FAN.sel]):null;
- return `<div class="fbar"><div><span>Gameweek</span><b>${st.openWeek}</b></div><div><span>Deadline</span><b style="font-size:22px">${fanWhen(wk.deadline)}</b><small>${fanLeft(wk.deadline)}</small></div><div><span>Bank</span><b>${ksh(s.bank)}</b><small>Squad ${ksh(s.value)}</small></div><div><span>Transfers</span><b>${me.base?s.changed+" / "+c.freeTransfers+" free":"Free"}</b><small>${s.hits?"Cost: −"+s.hits+" points":me.base?"No cost":"First team is free"}</small></div></div>
+ const seg=`<div class="seg" role="tablist"><button data-act="sub" data-k="pick" aria-selected="${!tx}" ${isFull?"":"disabled"} title="${isFull?"":"Pick all 10 players in Transfers first"}">Pick Team</button><button data-act="sub" data-k="transfer" aria-selected="${tx}">Transfers</button></div>`;
+ const bar=`<div class="fbar"><div><span>Gameweek</span><b>${st.openWeek}</b></div><div><span>Deadline</span><b style="font-size:22px">${fanWhen(wk.deadline)}</b><small>${fanLeft(wk.deadline)}</small></div>${tx?`<div><span>Bank</span><b>${ksh(s.bank)}</b><small>Squad ${ksh(s.value)}</small></div><div><span>Transfers</span><b>${me.base?s.changed+" / "+c.freeTransfers+" free":"Free"}</b><small>${s.hits?"Cost: −"+s.hits+" points":me.base?"No cost":"First team is free"}</small></div>`:""}</div>`;
+ const sel=selP?(tx?`<div class="fsel"><span><b>${esc(selP.name)}</b> · ${selP.pos} · ${esc(T(selP.team).name)} · ${ksh(selP.price||0)}</span><span class="row"><button class="btn" data-act="out">Transfer out</button><button class="btn o" data-act="cancel">Cancel</button></span><small>Choose a replacement from the list that opens.</small></div>`
+  :`<div class="fsel"><span><b>${esc(selP.name)}</b> · ${selP.pos} · ${esc(T(selP.team).name)}</span><span class="row"><button class="btn" data-act="cap" ${FAN.sel>6?"disabled":""}>Captain</button><button class="btn" data-act="vice" ${FAN.sel>6?"disabled":""}>Vice</button><button class="btn o" data-act="cancel">Cancel</button></span><small>Tap another player to swap pitch and bench.</small></div>`):"";
+ return `${seg}${bar}
  ${s.count<10?`<p class="hint" style="margin-bottom:10px">Pick your 10 players: ${s.count} of 10. Tap a "+" to choose. Budget ${ksh(c.budget)}, at most ${c.clubLimit} from one club.</p>`:""}
- ${FAN.mk?marketHTML():""}${pitchHTML(d.picks,{sel:FAN.sel,cap:d.captain,vice:d.vice})}
- ${selP?`<div class="fsel"><span><b>${esc(selP.name)}</b> · ${selP.pos} · ${esc(T(selP.team).name)} · ${ksh(selP.price||0)}</span><span class="row"><button class="btn" data-act="cap" ${FAN.sel>6?"disabled":""}>Captain</button><button class="btn" data-act="vice" ${FAN.sel>6?"disabled":""}>Vice</button><button class="btn o" data-act="out">Transfer out</button><button class="btn o" data-act="cancel">Cancel</button></span><small>Or tap another player to swap pitch and bench.</small></div>`:""}
- <div class="row" style="margin-top:14px;align-items:center"><button class="btn" data-act="save" ${dirty&&full(d)?"":"disabled"}>Save team</button><button class="btn o" data-act="reset" ${dirty?"":"disabled"}>Undo changes</button><span class="msg">${esc(FAN.msg)}</span></div>
- <p class="hint" style="margin-top:6px">The captain scores double. If your captain doesn't play, the vice-captain takes over. Starters who don't play are replaced by bench players in order.</p>`}
+ ${tx&&FAN.mk?marketHTML():""}${pitchHTML(d.picks,{sel:FAN.sel,cap:d.captain,vice:d.vice,price:tx})}
+ ${sel}
+ <div class="row" style="margin-top:14px;align-items:center"><button class="btn" data-act="save" ${dirty&&isFull?"":"disabled"}>Save team</button><button class="btn o" data-act="reset" ${dirty?"":"disabled"}>Undo changes</button><span class="msg">${esc(FAN.msg)}</span></div>
+ <p class="hint" style="margin-top:6px">${tx?"Tap a player to transfer them out. Prices are above each shirt.":"The captain scores double. If your captain doesn't play, the vice-captain takes over. Starters who don't play are replaced by bench players in order. To change players, use Transfers."}</p>`}
+
 function fanPointsTab(){const me=FAN.st.me,ws=Object.keys(me.weeks).map(Number).sort((a,b)=>a-b);
  if(!ws.length)return '<div class="empty">No points yet. They appear once a gameweek you played in has results.</div>';
- const n=ws.includes(FAN.gw)?FAN.gw:ws[ws.length-1],w=me.weeks[n],bench=w.picks.slice(7).map(id=>{const s=w.subs.find(x=>x.in===id);return s?s.out:id}),subIn=new Set(w.subs.map(s=>s.in)),subOut=new Set(w.subs.map(s=>s.out));
- const sub=id=>`${(w.per[id]||0)*(id===w.cap?FAN.st.cfg.captain:1)} pts${id===w.cap?" (×"+FAN.st.cfg.captain+")":""}${subIn.has(id)?" ↑":subOut.has(id)?" ↓":""}`;
+ const n=ws.includes(FAN.gw)?FAN.gw:ws[ws.length-1],w=me.weeks[n];
  return `<div class="wkbar">${ws.map(x=>`<a href="#/fantasy" data-act="gw" data-n="${x}" class="${x===n?"on":""}">${x}</a>`).join("")}</div>
  <div class="stats"><div><b>${w.pts}</b><span>Gameweek ${n}</span></div><div><b>${w.hits?"−"+w.hits:0}</b><span>Transfer cost</span></div><div><b>${me.total}</b><span>Season total</span></div></div>
- ${pitchHTML([...w.start,...bench],{cap:w.cap,vice:w.vice,sub})}${w.subs.length?`<p class="hint" style="margin-top:10px">Auto-subs: ${w.subs.map(s=>esc(pl(s.in).name)+" came on for "+esc(pl(s.out).name)).join(", ")}.</p>`:""}`}
+ ${lineupHTML(w)}`}
+
 function fanBoardTab(){const st=FAN.st,ws=st.weeks.filter(w=>w.status!=="upcoming"),n=FAN.bw||0,key=b=>n?(b.w[n]||0):b.total;
  const L=[...st.board].sort((a,b)=>key(b)-key(a)||a.team.localeCompare(b.team));
  return `<div class="tabs"><button role="tab" data-act="bw" data-n="0" aria-selected="${!n}">Overall</button>${ws.map(w=>`<button role="tab" data-act="bw" data-n="${w.n}" aria-selected="${n===w.n}">GW ${w.n}</button>`).join("")}</div>
  ${L.length?`<div class="ts"><table style="min-width:420px"><thead><tr><th>#</th><th>Team</th><th>Manager</th><th>${n?"GW "+n:"Total"}</th></tr></thead><tbody>${L.map((b,i)=>`<tr class="${b.me?"top":""}"><td>${i+1}</td><td><b>${esc(b.team)}</b>${b.me?" (you)":""}</td><td>${esc(b.mgr)}</td><td class="p">${key(b)}</td></tr>`).join("")}</tbody></table></div>`:'<div class="empty">No managers yet. Be the first to pick a team.</div>'}`}
 function fanRulesTab(){const c=FAN.st?FAN.st.cfg:FAN.cfg.cfg,me=FAN.st&&FAN.st.me;
  return `<div class="cols"><div class="ed"><b>How it works</b><p>Pick ${c.squad} players: ${c.comp.GK} goalkeepers, ${c.comp.DEF} defenders, ${c.comp.MID} midfielders and ${c.comp.FWD} forwards. Seven play (1 goalkeeper, ${c.formation.DEF.join("-")} defenders, ${c.formation.MID.join("-")} midfielders, ${c.formation.FWD.join("-")} forwards) and three sit on the bench.</p>
- <ul class="rl"><li>Budget: ${ksh(c.budget)}.</li><li>At most ${c.clubLimit} players from one club.</li><li>${c.freeTransfers} free transfers each gameweek, then −${c.hitCost} points for each extra.</li><li>Teams lock ${c.deadlineMinutes} minutes before the gameweek's first kick-off.</li><li>The captain scores ×${c.captain}. The vice-captain takes over if the captain doesn't play.</li><li>Starters who don't play are replaced by bench players, in order, if the formation stays legal.</li></ul></div>
+ <ul class="rl"><li>Budget: ${ksh(c.budget)}.</li><li>At most ${c.clubLimit} players from one club.</li><li>${c.freeTransfers} free transfers each gameweek, then −${c.hitCost} points for each extra.</li><li>Teams lock ${c.deadlineMinutes} minutes before the gameweek's first kick-off.</li><li>The captain scores ×${c.captain}. The vice-captain takes over if the captain doesn't play.</li><li>Starters who don't play are replaced by bench players, in order, if the formation stays legal.</li><li>It's free, just for bragging rights.</li></ul></div>
  <div class="ed"><b>Scoring</b><table style="min-width:0"><tbody>
  <tr><td style="text-align:left">Playing</td><td><b>+${c.appearance}</b></td></tr><tr><td style="text-align:left">Goal (GK / DEF)</td><td><b>+${c.goal.GK}</b></td></tr><tr><td style="text-align:left">Goal (MID)</td><td><b>+${c.goal.MID}</b></td></tr><tr><td style="text-align:left">Goal (FWD)</td><td><b>+${c.goal.FWD}</b></td></tr>
  <tr><td style="text-align:left">Assist</td><td><b>+${c.assist}</b></td></tr><tr><td style="text-align:left">Clean sheet (GK / DEF)</td><td><b>+${c.cs.GK}</b></td></tr><tr><td style="text-align:left">Clean sheet (MID)</td><td><b>+${c.cs.MID}</b></td></tr>
@@ -540,15 +622,15 @@ function fanRulesTab(){const c=FAN.st?FAN.st.cfg:FAN.cfg.cfg,me=FAN.st&&FAN.st.m
 function fanDraw(){const el=$("#fan");if(!el)return;
  if(!FAN.cfg){el.innerHTML='<p class="hint">Loading...</p>';return}
  if(!FAN.cfg.enabled){el.innerHTML=`<div class="empty">${esc(FAN.cfg.reason||"Fantasy isn't available yet.")}</div>`;return}
- const me=FAN.st&&FAN.st.me,tabs=me?[["team","My team"],["points","Points"],["board","Leaderboard"],["rules","Rules"]]:[["board","Leaderboard"],["rules","Rules"]];
- if(!tabs.some(t=>t[0]===FAN.tab))FAN.tab=tabs[0][0];
- const body=FAN.tab==="team"?fanTeamTab():FAN.tab==="points"?fanPointsTab():FAN.tab==="board"?fanBoardTab():fanRulesTab();
+ const me=FAN.st&&FAN.st.me,tabs=me?[["home","Home"],["team","Team & transfers"],["points","Points"],["board","Leaderboard"],["rules","Rules"]]:[["home","Home"],["board","Leaderboard"],["rules","Rules"]];
+ if(FAN.tab!=="top"&&!tabs.some(t=>t[0]===FAN.tab))FAN.tab=tabs[0][0];
+ const body=FAN.tab==="top"?fanTopTab():FAN.tab==="home"?fanHomeTab():FAN.tab==="team"?fanTeamTab():FAN.tab==="points"?fanPointsTab():FAN.tab==="board"?fanBoardTab():fanRulesTab();
  el.innerHTML=(FAN.demo?'<div class="demo">Preview with sample data: sign-in and saving are switched off here. You are looking at a sample manager.</div>':"")+
  (me?"":`<div class="fhero"><div><h2>Play fantasy K South</h2><p>Pick ${FAN.cfg.cfg.squad} players, beat your friends, and win the bragging rights. Free to play.</p></div><div id="gbtn"></div><p class="msg">${esc(FAN.msg)}</p></div>`)+
  `<div class="tabs" id="ft">${tabs.map(([k,l])=>`<button role="tab" data-act="tab" data-k="${k}" aria-selected="${FAN.tab===k}">${l}</button>`).join("")}</div>${body}`;
  if(FAN.mk)marketList();if(!me)fanGoogle()}
 function fanGoogle(){const el=$("#gbtn");if(!el||FAN.demo||!FAN.cfg.googleClientId)return;
- const go=()=>{google.accounts.id.initialize({client_id:FAN.cfg.googleClientId,callback:async r=>{try{const j=await fapi("POST","/login",{credential:r.credential});fanTok(j.token);await fanLoad();FAN.tab="team";fanDraw()}catch(e){FAN.msg=e.message;fanDraw()}}});google.accounts.id.renderButton(el,{theme:"filled_blue",size:"large",shape:"pill",text:"signin_with"})};
+ const go=()=>{google.accounts.id.initialize({client_id:FAN.cfg.googleClientId,callback:async r=>{try{const j=await fapi("POST","/login",{credential:r.credential});fanTok(j.token);await fanLoad();FAN.tab="home";fanDraw()}catch(e){FAN.msg=e.message;fanDraw()}}});google.accounts.id.renderButton(el,{theme:"filled_blue",size:"large",shape:"pill",text:"signin_with"})};
  if(window.google&&google.accounts)go();else{const s=document.createElement("script");s.src="https://accounts.google.com/gsi/client";s.async=true;s.onload=go;document.head.appendChild(s)}}
 async function fanSave(){const d=FAN.draft,st=FAN.st;
  if(!d.captain||!d.vice){const s=d.picks.slice(0,7).filter(id=>id&&pl(id).pos!=="GK").sort((a,b)=>fprice(b)-fprice(a));d.captain=d.captain||s.find(x=>x!==d.vice);d.vice=d.vice||s.find(x=>x!==d.captain)}
@@ -557,13 +639,19 @@ async function fanSave(){const d=FAN.draft,st=FAN.st;
  try{FAN.msg="Saving...";fanDraw();await fapi("PUT","/team",{picks:d.picks,captain:d.captain,vice:d.vice});FAN.st=await fapi("GET","/state");fanReset(true);FAN.msg="Team saved for Gameweek "+FAN.st.openWeek+"."}catch(x){FAN.msg=x.message}fanDraw()}
 function fanClick(e){const b=e.target.closest("[data-act]");if(!b||b.disabled)return;const a=b.dataset.act,d=FAN.draft;
  if(a==="tab"){FAN.tab=b.dataset.k;FAN.mk=null;FAN.msg=""}
+ else if(a==="team"){FAN.tab="team";FAN.sub=b.dataset.sub==="transfer"?"transfer":"pick";FAN.sel=null;FAN.mk=null;FAN.msg=""}
+ else if(a==="sub"){FAN.sub=b.dataset.k==="transfer"?"transfer":"pick";FAN.sel=null;FAN.mk=null;FAN.msg=""}
+ else if(a==="viewme"){FAN.tab="points";FAN.gw=+b.dataset.n;FAN.msg=""}
+ else if(a==="viewtop"){FAN.tab="top";FAN.tw=+b.dataset.n}
+ else if(a==="tw"){e.preventDefault();FAN.tw=+b.dataset.n}
  else if(a==="gw"){e.preventDefault();FAN.gw=+b.dataset.n}
  else if(a==="bw"){FAN.bw=+b.dataset.n}
+ else if(a==="hw"){e.preventDefault();FAN.hw=+b.dataset.n}
  else if(a==="slot"){const i=+b.dataset.i;
-  if(!d.picks[i]){FAN.mk={i,f:{}};FAN.sel=null}
+  if(!d.picks[i]){FAN.sub="transfer";FAN.mk={i,f:{}};FAN.sel=null}
   else if(FAN.sel==null||FAN.sel===i){FAN.sel=FAN.sel===i?null:i;FAN.mk=null}
   else{const s=FAN.sel,sameSide=(s<7)===(i<7)&&!(s>=8&&i>=8);
-   if(sameSide)FAN.sel=i;
+   if(sameSide||fanMode()==="transfer")FAN.sel=i;
    else if(!full(d))FAN.msg="Pick all 10 players before moving anyone to the bench.";
    else{const next=[...d.picks];[next[s],next[i]]=[next[i],next[s]];const er=lineupErr(next);
     if(er)FAN.msg=er;else{d.picks=next;const st=next.slice(0,7);if(!st.includes(d.captain))d.captain=null;if(!st.includes(d.vice))d.vice=null;FAN.sel=null;FAN.msg=""}}}}
@@ -575,8 +663,8 @@ function fanClick(e){const b=e.target.closest("[data-act]");if(!b||b.disabled)re
  else if(a==="reset"){fanReset();FAN.msg=""}
  else if(a==="save"){fanSave();return}
  else if(a==="name"){const v=($("#tn")||{}).value||"";if(FAN.demo)return;fapi("PUT","/profile",{teamName:v}).then(async()=>{FAN.st=await fapi("GET","/state");fanReset();fanDraw()}).catch(x=>{FAN.msg=x.message;fanDraw()});return}
- else if(a==="signout"){fanTok(null);FAN.st=FAN.st?{...FAN.st,me:null}:null;FAN.tab="board"}
- else if(a==="del"){if(confirm("Delete your fantasy account and team? This can't be undone."))fapi("DELETE","/me").then(()=>{fanTok(null);return fanLoad()}).then(()=>{FAN.tab="board";fanDraw()}).catch(x=>{FAN.msg=x.message;fanDraw()});return}
+ else if(a==="signout"){fanTok(null);FAN.st=FAN.st?{...FAN.st,me:null}:null;FAN.tab="home"}
+ else if(a==="del"){if(confirm("Delete your fantasy account and team? This can't be undone."))fapi("DELETE","/me").then(()=>{fanTok(null);return fanLoad()}).then(()=>{FAN.tab="home";fanDraw()}).catch(x=>{FAN.msg=x.message;fanDraw()});return}
  fanDraw()}
 function fanInput(e){const t=e.target;if(!FAN.mk)return;
  if(t.id==="mq"){FAN.mk.f.q=t.value;marketList()}else if(t.id==="mc"){FAN.mk.f.club=t.value;marketList()}else if(t.id==="ms"){FAN.mk.f.sort=t.value;marketList()}}
@@ -619,14 +707,14 @@ gameweeks(a){const W=weeks(),B=banner("GW","Gameweeks","Every matchday with scor
 
 glory(){const L=[...D.glory].sort((a,b)=>String(b.season).localeCompare(String(a.season),undefined,{numeric:true})),
   B=banner("GLORY","Glory","The roll of honour: every champion of the K South League.",null,null,"th-glory",`<div class="gtrophy">${TROPHY}</div>`);
- if(!L.length)return B+`<main class="w"><section><div class="empty">A section to honour past winners.<li>Coming Soon</li></div></section></main>`;
+ if(!L.length)return B+`<main class="w"><section><div class="empty">Past winners will appear here. They're added in Admin under Glory.</div></section></main>`;
  const cnt={};L.forEach(g=>{const c=champ(g),k=c.id||"n:"+c.name;(cnt[k]=cnt[k]||{c,n:0}).n++});
  const most=Object.values(cnt).sort((a,b)=>b.n-a.n||a.c.name.localeCompare(b.c.name));
  return B+`<main class="w"><section><div class="hd"><h2>Most titles</h2></div><div class="gtitles">${most.map(m=>`<div class="gt" style="--c:${esc(m.c.c)}">${crest(m.c)}<span>${esc(m.c.name)}</span><b>${m.n}</b></div>`).join("")}</div></section>
  <section><div class="hd"><h2>Roll of honour</h2></div><div class="gl-list">${L.map((g,i)=>glCard(g,i===0)).join("")}</div></section></main>`},
 champions(){const cs=D.site.cl||{},L=D.cl,
   B=banner("UCL","Champions League",(cs.season?cs.season+"  ·  ":"")+"The league's own cup: a league phase, then knockouts.",null,null,"th-ucl",STARBALL);
- if(!L.length)return B+`<div class="clw th-ucl"><main class="w"><section><div class="empty">The Champions League draw is coming soon</div></section></main></div>`;
+ if(!L.length)return B+`<div class="clw th-ucl"><main class="w"><section><div class="empty">The draw hasn't been made yet. Matches appear here once they're added in Admin.</div></section></main></div>`;
  const fin=[...L].filter(m=>m.stage==="Final"&&clWinner(m))[0],cw=fin?T(clWinner(fin)):null;
  const hero=cw?`<div class="chm" style="--c:${esc(cw.c)}">${TROPHY}<div><span class="tag">${esc(cs.season||"")} Champions League winners</span><h2>${esc(cw.name)}</h2></div>${glBadge(cw)}</div>`:"";
  return B+`<div class="clw th-ucl"><main class="w"><section>${hero}<div class="tabs"><button role="tab" data-cv="table" aria-selected="${CV==="table"}">League phase</button><button role="tab" data-cv="ko" aria-selected="${CV==="ko"}">Knockouts</button><button role="tab" data-cv="all" aria-selected="${CV==="all"}">All matches</button></div><div id="cv"></div></section></main></div>`},
