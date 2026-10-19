@@ -445,7 +445,7 @@ const count=id=>D.players.filter(p=>p.team===id).length;
 const teamCard=t=>`<a class="tc ${t.theme?"th-"+esc(t.theme):""}" href="#/team/${esc(t.id)}" style="--c:${esc(t.c)}" data-s="${esc(t.short)}">${t.badge?`<img class="cb" src="${esc(t.badge)}" alt="">`:`<span class="cr">${esc((t.short||"?")[0])}</span>`}<div><h3>${esc(t.name)}</h3><small>${count(t.id)?count(t.id)+" players":"View team"}</small></div></a>`;
 const POS=[["GK","Goalkeepers"],["DEF","Defenders"],["MID","Midfielders"],["FWD","Forwards"]];
 const squad=t=>{const st=Object.fromEntries(playerRows().map(r=>[r.id,r])),ps=D.players.filter(p=>p.team===t.id);if(!ps.length)return '<p class="hint">Squad coming soon.</p>';
- return POS.map(([k,l])=>{const g=ps.filter(p=>p.pos===k).sort((a,b)=>(a.num??999)-(b.num??999));return g.length?`<div class="day">${l}</div><div class="squad" style="--c:${esc(t.c)}">${g.map(p=>`<div class="pl"><b>${p.num??"–"}</b><div><strong>${esc(p.name)}</strong><span class="tag">${k}</span>${chip(st[p.id])}</div></div>`).join("")}</div>`:""}).join("")};
+ return POS.map(([k,l])=>{const g=ps.filter(p=>p.pos===k).sort((a,b)=>(a.num??999)-(b.num??999));return g.length?`<div class="day">${l}</div><div class="squad" style="--c:${esc(t.c)}">${g.map(p=>`<a class="pl" href="#/player/${esc(p.id)}"><b>${p.num??"–"}</b><div><strong>${esc(p.name)}</strong><span class="tag">${k}</span>${chip(st[p.id])}</div></a>`).join("")}</div>`:""}).join("")};
 
 /* ---------- gameweeks ---------- */
 const dateList=()=>[...new Set(D.fixtures.map(f=>f.date))].sort();
@@ -728,6 +728,8 @@ admin(){const head=banner("ADMIN","Admin","Add fixtures, enter scores, write new
  return head+`<main class="w"><section><div class="tabs" id="at">${[["fixtures","Fixtures"],["news","News"],["teams","Teams"],["players","Players"],["stats","Match stats"],["glory","Glory"],["cl","Champions League"],["fan","Fantasy"],["site","Banners"]].map(([k,l])=>`<button role="tab" data-k="${k}" aria-selected="${AT===k}">${l}</button>`).join("")}${MODE==="live"?'<button id="so" style="margin-left:auto;border-color:var(--line)">Sign out</button>':""}</div><div id="ad"></div></section></main>`}
 };
 
+
+  player(id); const p=D.players.find(x=>x.id===id);if(!p)return P.stats();const st=playerRows().find(r=>r.id===id)||{gp:0,g:0,a:0,y:0,r:0,pm:0,cs:0,ga:0};const team=T(p.team);return banner(`PLAYER`,esc(p.name),esc(team.name),`<a href="#/teams">Teams</a> / ${esc(team.name)}`,team.c,``,``)+`<main class="w"><section><div class="hd"><h2>Player Info</h2></div><div class="w"><div class="tm">${crest(team)}<span>${esc(p.name)}</span></div><div><strong>Number:</strong> ${p.num??'–'}<br/><strong>Position:</strong> ${p.pos}<br/><strong>Team:</strong> <a href="#/team/${esc(team.id)}">${esc(team.name)}</a></div></div></section><section><div class="hd"><h2>Season Statistics</h2></div><div class="stats"><div><b>${st.gp}</b><span>Appearances</span></div><div><b>${st.g}</b><span>Goals</span></div><div><b>${st.a}</b><span>Assists</span></div><div><b>${st.y}</b><span>Yellow Cards</span></div><div><b>${st.r}</b><span>Red Cards</span></div></div></section></main>`
 /* ---------- admin ---------- */
 const teamOpts=()=>teams().map(t=>[t.id,t.name]);
 const sel=(k,o,x)=>`<select data-k="${k}">${o.map(([i,n])=>`<option value="${esc(i)}" ${x===i?"selected":""}>${esc(n)}</option>`).join("")}</select>`;

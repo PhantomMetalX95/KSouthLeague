@@ -642,7 +642,7 @@ def scene_outro(M, cta):
 
     def draw(im, t, C):
         put(im, logo(470), W / 2, 480, a=prog(t, .1, .4), s=.6 + .4 * back(prog(t, .1, .9)))
-        put(im, text("FANTASY LEAGUE COMING SOON", "d", 68, 900, YEL), W / 2, 860, a=prog(t, .5, .5))
+        put(im, text("MORE FANTASY FEATURES COMING SOON", "d", 68, 900, YEL), W / 2, 860, a=prog(t, .5, .5))
         if M.next_week:
             rb = rrect(W - 200, 180, 18, ORG + (255,))
             p = ease(prog(t, 1.0, .5))
@@ -650,7 +650,7 @@ def scene_outro(M, cta):
             put(im, text("NEXT UP: GAMEWEEK %d" % M.next_week, "d", 82, 900, NAVY), W / 2, 1105, a=p)
             put(im, text(fmt_day(M.next_date), "d", 56, 800, NAVY), W / 2, 1185, a=p)
         put(im, text(cta, "d", 74, 800, SKY), W / 2, 1430, a=prog(t, 1.6, .5))
-        put(im, text("EMBAKASI WEST", "d", 54, 700, MUT), W / 2, 1535, a=prog(t, 1.8, .5))
+        put(im, text("LIGI IBAMBE", "d", 54, 700, MUT), W / 2, 1535, a=prog(t, 1.8, .5))
     return bg, draw
 
 
@@ -775,7 +775,7 @@ def main():
     ap.add_argument("--voice", default="none", choices=["auto", "edge", "kokoro", "sapi", "none"])
     ap.add_argument("--voice-name", help="voice to use, e.g. en-KE-ChilembaNeural (edge) or bm_george (kokoro)")
     ap.add_argument("--rate", default="+6%", help="speaking speed for the edge voice, e.g. +10%%")
-    ap.add_argument("--cta", default="FOLLOW K SOUTH LEAGUE", help="line shown on the last screen, e.g. your page name")
+    ap.add_argument("--cta", default="K SOUTH LEAGUE", help="line shown on the last screen, e.g. your page name")
     ap.add_argument("--music", help="optional background music file (mp3/wav)")
     ap.add_argument("--stills", help="also save a PNG of the end of every scene into this folder")
     ap.add_argument("--no-video", action="store_true", help="only make stills and the script text")
@@ -872,3 +872,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
