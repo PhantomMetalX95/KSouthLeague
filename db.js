@@ -13,7 +13,7 @@ export const TABLES = {
   teams: { cols: { name: "s", short: "s", c: "s", manager: "s", ground: "s", bio: "s", ord: "i", badge: "s", theme: "s", icon: "s" }, req: ["name", "short"] },
   fixtures: { cols: { home: "s", away: "s", date: "s", time: "s", venue: "s", hg: "i?", ag: "i?", week: "i?" }, req: ["home", "away", "date"] },
   news: { cols: { title: "s", tag: "s", date: "s", color: "s", summary: "s", body: "s" }, req: ["title"] },
-  players: { cols: { team: "s", name: "s", num: "i?", pos: "s", price: "p" }, req: ["team", "name", "pos"] },
+  players: { cols: { team: "s", name: "s", num: "i?", pos: "s", price: "p", photo: "s" }, req: ["team", "name", "pos"] },
   glory: { cols: { season: "s", champion: "s", champion_name: "s", runner_up: "s", top_scorer: "s", note: "s" }, req: ["season"] },
   cl: { cols: { stage: "s", home: "s", away: "s", date: "s", time: "s", venue: "s", hg: "i?", ag: "i?", ph: "i?", pa: "i?" }, req: ["stage"] },
   stats: { cols: {}, req: [], bulk: true }, /* written only through saveMatchStats */
@@ -45,6 +45,7 @@ export async function init() {
   if (!fx.includes("week")) await db.execute("ALTER TABLE fixtures ADD COLUMN week INTEGER");
   const pl = (await db.execute("PRAGMA table_info(players)")).rows.map((r) => r.name);
   if (!pl.includes("price")) await db.execute("ALTER TABLE players ADD COLUMN price INTEGER DEFAULT 5000");
+  if (!pl.includes("photo")) await db.execute("ALTER TABLE players ADD COLUMN photo TEXT DEFAULT ''");
   const st = (await db.execute("PRAGMA table_info(stats)")).rows.map((r) => r.name);
   if (!st.includes("pen_missed")) await db.execute("ALTER TABLE stats ADD COLUMN pen_missed INTEGER DEFAULT 0");
 }
@@ -89,6 +90,7 @@ export function clean(table, body) {
   if (table === "players") {
     if (!POSITIONS.includes(row.pos)) throw Object.assign(new Error("position must be GK, DEF, MID or FWD"), { status: 400 });
     if (row.num !== null && row.num > 99) throw Object.assign(new Error("shirt numbers run 0 to 99"), { status: 400 });
+    row.photo = text(row.photo, 200); // Limit photo path length
   }
   return row;
 }
