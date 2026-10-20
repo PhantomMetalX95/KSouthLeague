@@ -111,6 +111,7 @@ tr[data-go]{cursor:pointer}tr[data-go]:hover{background:var(--bg)}
 .tc .cb{width:58px;height:62px;object-fit:contain;position:relative;z-index:1;filter:drop-shadow(0 4px 8px rgba(0,0,0,.5))}
 .tc.th-civo{background:radial-gradient(120% 90% at 85% 0,#2c210c,#08080a 62%);border:1px solid #b8893a;box-shadow:inset 0 0 0 4px #08080a,inset 0 0 0 5px rgba(212,166,74,.55);gap:6px;justify-content:flex-start}
 .tc.th-civo::after{content:"";right:0;top:auto;bottom:0;width:130px;height:110px;font-size:0;background:repeating-linear-gradient(-48deg,transparent 0 10px,#d4a64a 10px 15px);clip-path:polygon(100% 0,100% 100%,0 100%);opacity:.9}
+.tc.th-civo .cb{width:88px;height:96px}
 .tc.th-civo h3{background:linear-gradient(180deg,#f6e2a0,#d4a64a 60%,#a77a24);-webkit-background-clip:text;background-clip:text;color:transparent}
 .tc.th-civo small{color:#d9cfae}.tc.th-civo>div{margin-top:auto;position:relative;z-index:1}
 .pb.th-civo{background:radial-gradient(circle at 78% 35%,#241b09,#060607 62%)}
@@ -119,6 +120,8 @@ tr[data-go]{cursor:pointer}tr[data-go]:hover{background:var(--bg)}
 .pb.th-civo h1{background:linear-gradient(180deg,#f6e2a0,#d4a64a 55%,#9a6f1f);-webkit-background-clip:text;background-clip:text;color:transparent;padding-bottom:4px}
 .pb.th-civo .crumb{color:#d4a64a}.pb.th-civo .crumb a{color:#f6e2a0}.pb.th-civo p{color:#d9cfae}
 .tbadge{position:absolute;right:max(20px,calc(50% - 540px));top:50%;transform:translateY(-50%);width:clamp(120px,21vw,270px);filter:drop-shadow(0 18px 34px rgba(0,0,0,.65));z-index:1}
+.pb .w{position:relative;z-index:2}
+@media(min-width:701px){.pb:has(.tbadge) .w{padding-right:clamp(150px,24vw,300px)}.pb.th-elland:has(.tbadge) .w,.pb.th-mandem:has(.tbadge) .w{padding-right:clamp(210px,33vw,430px)}}
 @media(max-width:700px){.tbadge{opacity:.28;right:-10px}}
 .thw.th-civo{background:#09090a;--card:#141416;--line:#2e2616;--mut:#a89a78;--bg:#09090a;--tx:#f4f1e8;--org:#d4a64a;color:var(--tx);padding-bottom:36px}
 .thw.th-civo .hd::after{background:linear-gradient(90deg,#d4a64a 0 56px,#2e2616 56px)}
@@ -153,7 +156,7 @@ tr[data-go]{cursor:pointer}tr[data-go]:hover{background:var(--bg)}
 .pb.th-baraka .tbadge{aspect-ratio:1;object-fit:contain;background:#0b0b0b;border-radius:50%;padding:22px;width:clamp(140px,20vw,250px);box-shadow:0 0 0 8px #edbc3f,0 0 0 13px #0b0b0b;filter:none}
 .thw.th-baraka{background:#fff;--card:#fff;--bg:#fff;--tx:#0b0b0b;--line:#f0e1b2;--mut:#6b5a1d;--org:#edbc3f;color:var(--tx);padding-bottom:36px}
 .thw.th-baraka .hd::after{background:linear-gradient(90deg,#edbc3f 0 56px,#f0e1b2 56px)}
-.thw.th-baraka .stats div{border-top:6px solid #edbc3f}.thw.th-baraka .stats b,.thw.th-baraka .pl b{color:#0b0b0b}
+.thw.th-baraka .stats div{border-top:6px solid #edbc3f}.thw.th-baraka .stats b{color:#0b0b0b}.thw.th-baraka .pl b{color:#edbc3f}
 .thw.th-baraka .pl{border-left-color:#edbc3f}.thw.th-baraka .pl .tag{background:#edbc3f;color:#0b0b0b}
 /* Samba Boys: black, white and grey facets */
 :root{--facet:linear-gradient(135deg,#f7f8f9 0 34%,transparent 34%),linear-gradient(205deg,#dfe2e6 0 26%,transparent 26%),linear-gradient(320deg,#e9ebee 0 38%,transparent 38%),#d9dce0}
