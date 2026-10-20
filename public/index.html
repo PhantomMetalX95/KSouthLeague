@@ -729,7 +729,43 @@ admin(){const head=banner("ADMIN","Admin","Add fixtures, enter scores, write new
 };
 
 
-id => { player(id); const p=D.players.find(x=>x.id===id);if(!p)return P.stats();const st=playerRows().find(r=>r.id===id)||{gp:0,g:0,a:0,y:0,r:0,pm:0,cs:0,ga:0};const team=T(p.team);return banner(`PLAYER`,esc(p.name),esc(team.name),`<a href="#/teams">Teams</a> / ${esc(team.name)}`,team.c,``,``)+`<main class="w"><section><div class="hd"><h2>Player Info</h2></div><div class="w"><div class="tm">${crest(team)}<span>${esc(p.name)}</span></div><div><strong>Number:</strong> ${p.num??'–'}<br/><strong>Position:</strong> ${p.pos}<br/><strong>Team:</strong> <a href="#/team/${esc(team.id)}">${esc(team.name)}</a></div></div></section><section><div class="hd"><h2>Season Statistics</h2></div><div class="stats"><div><b>${st.gp}</b><span>Appearances</span></div><div><b>${st.g}</b><span>Goals</span></div><div><b>${st.a}</b><span>Assists</span></div><div><b>${st.y}</b><span>Yellow Cards</span></div><div><b>${st.r}</b><span>Red Cards</span></div></div></section></main>` }
+player(id) ; {
+  const p = D.players.find(x => x.id === id);
+  if (!p) return P.stats();
+  
+  const st = playerRows().find(r => r.id === id) || { gp: 0, g: 0, a: 0, y: 0, r: 0, pm: 0, cs: 0, ga: 0 };
+  const team = T(p.team) || { id: '', name: 'Unknown Team', c: '#333' };
+  
+  return banner(`PLAYER`, esc(p.name), esc(team.name), `<a href="#/teams">Teams</a> / ${esc(team.name)}`, team.c, ``, ``) + 
+    `<main class="w">
+       <section>
+         <div class="hd"><h2>Player Info</h2></div>
+         <div class="w">
+           <div class="player-photo">
+             ${p.photo ? `<img src="${esc(p.photo)}" alt="${esc(p.name)} photo">` : `<span class="cr">${esc((p.short || p.name || "?")[0])}</span>`}
+           </div>
+           <div>
+             <strong>${esc(p.name)}</strong><span class="tag">${p.pos}</span>
+           </div>
+           <div>
+             <strong>Number:</strong> ${p.num ?? '–'}<br/>
+             <strong>Position:</strong> ${p.pos}<br/>
+             <strong>Team:</strong> <a href="#/team/${esc(team.id)}">${esc(team.name)}</a>
+           </div>
+         </div>
+       </section>
+       <section>
+         <div class="hd"><h2>Season Statistics</h2></div>
+         <div class="stats">
+           <div><b>${st.gp}</b><span>Appearances</span></div>
+           <div><b>${st.g}</b><span>Goals</span></div>
+           <div><b>${st.a}</b><span>Assists</span></div>
+           <div><b>${st.y}</b><span>Yellow Cards</span></div>
+           <div><b>${st.r}</b><span>Red Cards</span></div>
+         </div>
+       </section>
+     </main>`;
+}
 /* ---------- admin ---------- */
 const teamOpts=()=>teams().map(t=>[t.id,t.name]);
 const sel=(k,o,x)=>`<select data-k="${k}">${o.map(([i,n])=>`<option value="${esc(i)}" ${x===i?"selected":""}>${esc(n)}</option>`).join("")}</select>`;
@@ -743,8 +779,8 @@ const FORMS={
   def:()=>({tag:"News",color:"#ff5a1f",date:new Date().toISOString().slice(0,10)}),src:newsList,lab:n=>n.title,chk:v=>v.title?"":"Add a title.",id:v=>(v.title.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,40)||"post")+"-"+Date.now().toString(36).slice(-4)},
  teams:{col:"teams",one:"team",f:[["name","Team name","text"],["short","Short name (3 letters)","text"],["c","Colour","color"],["manager","Manager","text"],["ground","Home ground","text"],["ord","Table order (0 first)","num"],["badge","Badge image (URL or /badges/name.png)","text"],["icon","Small icon for tables (optional)","text"],["theme","Card style","sel",[["","Standard"],["civo","Civo: black and gold"],["avenue","2nd Avenue: black and white"],["baraka","Baraka: gold and black"],["samba","Samba Boys: monochrome"],["elland","Elland: red and gold"],["mandem","Mandem: street black"]]],["bio","About the team","area"]],
   def:()=>({c:"#1971c2",ground:V,ord:D.teams.length}),src:teams,lab:t=>t.name,chk:v=>!v.name?"Add a team name.":!v.short?"Add a short name.":"",id:v=>rid("t")},
- players:{col:"players",one:"player",f:[["team","Team","team"],["name","Player name","text"],["num","Shirt number (0-99)","num"],["pos","Position","sel",POS.map(([k,l])=>[k,l.replace(/s$/,"")])],["price","Fantasy price (KSh)","num",100000]],
-  def:()=>({team:PT||teams()[0]?.id,pos:"MID",price:5000}),src:()=>D.players.filter(p=>p.team===PT).sort((a,b)=>(a.num??999)-(b.num??999)),lab:p=>`${p.num??"–"}  ${p.name} (${p.pos}) · KSh ${(p.price||0).toLocaleString("en-KE")}`,
+ players:{col:"players",one:"player",f:[["team","Team","team"],["name","Player name","text"],["num","Shirt number (0-99)","num"],["pos","Position","sel",POS.map(([k,l])=>[k,l.replace(/s$/,"")])],["price","Fantasy price (KSh)","num",100000],["photo","Photo URL (relative to public/)","text"]],
+  def:()=>({team:PT||teams()[0]?.id,pos:"MID",price:5000,photo:""}),src:()=>D.players.filter(p=>p.team===PT).sort((a,b)=>(a.num??999)-(b.num??999)),lab:p=>`${p.num??"–"}  ${p.name} (${p.pos}) · KSh ${(p.price||0).toLocaleString("en-KE")}`,
   chk:v=>!v.team?"Pick a team.":!v.name?"Add the player's name.":v.num!==null&&v.num>99?"Shirt numbers run 0 to 99.":v.num!==null&&D.players.some(p=>p.team===v.team&&p.num===v.num&&p.id!==EID)?"That shirt number is already taken in this team.":"",id:v=>rid("p")}};
 FORMS.glory={col:"glory",one:"past winner",f:[["season","Season (e.g. 2025/26)","text"],["champion","Champion","teamx"],["champion_name","Champion name (if not a current team)","text"],["runner_up","Runners-up","text"],["top_scorer","Top scorer","text"],["note","Note (optional)","text"]],
  def:()=>({}),src:()=>[...D.glory].sort((a,b)=>String(b.season).localeCompare(String(a.season),undefined,{numeric:true})),lab:g=>g.season+": "+champ(g).name,
