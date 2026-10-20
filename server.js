@@ -88,7 +88,10 @@ app.delete("/api/:table/:id", admin, async (req, res, next) => {
   } catch (e) { next(e); }
 });
 
+/* --- Serve static files --- */
+app.use("/players", express.static(path.join(dir, "players")));
 app.use(express.static(path.join(dir, "public")));
+
 app.use((err, _req, res, _next) => {
   if (err.status) return res.status(err.status).json({ error: err.message });
   console.error(err);
