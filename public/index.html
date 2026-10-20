@@ -729,7 +729,7 @@ admin(){const head=banner("ADMIN","Admin","Add fixtures, enter scores, write new
 };
 
 
-player(id) ; {
+function player(id) {
   const p = D.players.find(x => x.id === id);
   if (!p) return P.stats();
   
