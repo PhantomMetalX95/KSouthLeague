@@ -340,6 +340,19 @@ footer .w{display:flex;flex-wrap:wrap;gap:20px;justify-content:space-between;ali
 footer .fb{display:flex;align-items:center;gap:16px}footer .logo{width:68px;height:70px}
 footer a{color:#fff;margin-right:16px;font-weight:700}
 @media(prefers-reduced-motion:reduce){.ribbon div{animation:none}::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}.novt #app{animation:none}}
+.pph{flex:none;width:56px;height:56px;border-radius:50%;overflow:hidden;background:var(--bg);border:2px solid var(--c);display:grid;place-items:center}
+.pph img{width:100%;height:100%;object-fit:cover}.pph.none i{font:900 22px/1 "Big Shoulders Display",sans-serif;font-style:normal;color:var(--c);opacity:.7}
+.pl:has(.pph)>b{display:none}.pl{transition:transform .15s,box-shadow .15s}.pl:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.18)}
+.pprof{display:grid;grid-template-columns:minmax(200px,300px) 1fr;gap:28px;align-items:center;background:var(--card);border:1px solid var(--line);border-left:6px solid var(--c);border-radius:16px;padding:22px}
+.pph.big{width:100%;height:auto;aspect-ratio:4/5;border-radius:14px;border-width:3px}.pph.big.none i{font-size:120px}
+.pnum{display:flex;align-items:center;gap:12px}.pnum b{font:900 64px/1 "Big Shoulders Display",sans-serif;color:var(--c)}.pnum .tag{background:var(--c)}
+.pinfo h2{font:900 clamp(30px,5vw,48px)/1 "Big Shoulders Display",sans-serif;text-transform:uppercase;margin:6px 0 12px}
+.pbio{color:var(--mut);line-height:1.6;max-width:60ch;margin:0 0 18px}
+.pmeta{display:flex;flex-wrap:wrap;gap:10px 26px}.pmeta span{display:flex;flex-direction:column;font-weight:700}.pmeta small{color:var(--mut);font-weight:500;font-size:12px;text-transform:uppercase;letter-spacing:.06em}.pmeta a{color:inherit}
+@media(max-width:640px){.pprof{grid-template-columns:1fr}.pph.big{max-width:260px;margin:auto}}
+.thw.th-civo .pprof,.thw.th-civo .pph{border-color:#d4a64a}.thw.th-civo .pnum b,.thw.th-civo .pinfo h2{background:linear-gradient(180deg,#f6e2a0,#d4a64a 60%,#a77a24);-webkit-background-clip:text;background-clip:text;color:transparent}.thw.th-civo .pnum .tag{background:#d4a64a;color:#0a0a0b}
+.thw.th-avenue .pprof,.thw.th-avenue .pph{border-color:#fff}.thw.th-avenue .pnum b{color:#fff}.thw.th-avenue .pnum .tag{background:#fff;color:#0b0b0d}
+.thw.th-civo .pnum .tag{background:#d4a64a;color:#0a0a0b}.thw.th-avenue .pnum .tag{background:#fff;color:#0b0b0d}.thw.th-baraka .pnum .tag{background:#edbc3f;color:#0b0b0b}.thw.th-samba .pnum .tag{background:#0b0b0c;color:#fff}.thw.th-elland .pnum .tag{background:#e30000}.thw.th-mandem .pnum .tag{background:#daa33f;color:#070707}
 </style>
 </head>
 <body>
@@ -445,7 +458,7 @@ const count=id=>D.players.filter(p=>p.team===id).length;
 const teamCard=t=>`<a class="tc ${t.theme?"th-"+esc(t.theme):""}" href="#/team/${esc(t.id)}" style="--c:${esc(t.c)}" data-s="${esc(t.short)}">${t.badge?`<img class="cb" src="${esc(t.badge)}" alt="">`:`<span class="cr">${esc((t.short||"?")[0])}</span>`}<div><h3>${esc(t.name)}</h3><small>${count(t.id)?count(t.id)+" players":"View team"}</small></div></a>`;
 const POS=[["GK","Goalkeepers"],["DEF","Defenders"],["MID","Midfielders"],["FWD","Forwards"]];
 const squad=t=>{const st=Object.fromEntries(playerRows().map(r=>[r.id,r])),ps=D.players.filter(p=>p.team===t.id);if(!ps.length)return '<p class="hint">Squad coming soon.</p>';
- return POS.map(([k,l])=>{const g=ps.filter(p=>p.pos===k).sort((a,b)=>(a.num??999)-(b.num??999));return g.length?`<div class="day">${l}</div><div class="squad" style="--c:${esc(t.c)}">${g.map(p=>`<a class="pl" href="#/player/${esc(p.id)}"><b>${p.num??"–"}</b><div><strong>${esc(p.name)}</strong><span class="tag">${k}</span>${chip(st[p.id])}</div></a>`).join("")}</div>`:""}).join("")};
+ return POS.map(([k,l])=>{const g=ps.filter(p=>p.pos===k).sort((a,b)=>(a.num??999)-(b.num??999));return g.length?`<div class="day">${l}</div><div class="squad" style="--c:${esc(t.c)}">${g.map(p=>`<a class="pl" href="#/player/${esc(p.id)}">${pAv(p)}<b>${p.num??"–"}</b><div><strong>${esc(p.name)}</strong><span class="tag">${k}</span>${chip(st[p.id])}</div></a>`).join("")}</div>`:""}).join("")};
 
 /* ---------- gameweeks ---------- */
 const dateList=()=>[...new Set(D.fixtures.map(f=>f.date))].sort();
@@ -729,43 +742,17 @@ admin(){const head=banner("ADMIN","Admin","Add fixtures, enter scores, write new
 };
 
 
-function player(id) {
-  const p = D.players.find(x => x.id === id);
-  if (!p) return P.stats();
-  
-  const st = playerRows().find(r => r.id === id) || { gp: 0, g: 0, a: 0, y: 0, r: 0, pm: 0, cs: 0, ga: 0 };
-  const team = T(p.team) || { id: '', name: 'Unknown Team', c: '#333' };
-  
-  return banner(`PLAYER`, esc(p.name), esc(team.name), `<a href="#/teams">Teams</a> / ${esc(team.name)}`, team.c, ``, ``) + 
-    `<main class="w">
-       <section>
-         <div class="hd"><h2>Player Info</h2></div>
-         <div class="w">
-           <div class="player-photo">
-             ${p.photo ? `<img src="${esc(p.photo)}" alt="${esc(p.name)} photo">` : `<span class="cr">${esc((p.short || p.name || "?")[0])}</span>`}
-           </div>
-           <div>
-             <strong>${esc(p.name)}</strong><span class="tag">${p.pos}</span>
-           </div>
-           <div>
-             <strong>Number:</strong> ${p.num ?? '–'}<br/>
-             <strong>Position:</strong> ${p.pos}<br/>
-             <strong>Team:</strong> <a href="#/team/${esc(team.id)}">${esc(team.name)}</a>
-           </div>
-         </div>
-       </section>
-       <section>
-         <div class="hd"><h2>Season Statistics</h2></div>
-         <div class="stats">
-           <div><b>${st.gp}</b><span>Appearances</span></div>
-           <div><b>${st.g}</b><span>Goals</span></div>
-           <div><b>${st.a}</b><span>Assists</span></div>
-           <div><b>${st.y}</b><span>Yellow Cards</span></div>
-           <div><b>${st.r}</b><span>Red Cards</span></div>
-         </div>
-       </section>
-     </main>`;
-}
+const PLPOS={GK:"Goalkeeper",DEF:"Defender",MID:"Midfielder",FWD:"Forward"};
+const pAv=(p,cls="pph")=>p.photo?`<span class="${cls}"><img src="${esc(p.photo)}" alt="${esc(p.name)}" loading="lazy"></span>`:`<span class="${cls} none"><i>${p.num??esc((p.name||"?")[0])}</i></span>`;
+function pBio(p,t,st){if(p.bio)return p.bio;const r=PLPOS[p.pos]||"Player";const line=st.gp?`${st.gp} appearance${st.gp===1?"":"s"} this season${st.g?`, ${st.g} goal${st.g===1?"":"s"}`:""}${st.a?` and ${st.a} assist${st.a===1?"":"s"}`:""}${p.pos==="GK"&&st.cs?`, with ${st.cs} clean sheet${st.cs===1?"":"s"}`:""}.`:"Yet to feature this season.";return `${r} wearing the number ${p.num??"–"} shirt for ${t.name}. ${line}`}
+function player(id){const p=D.players.find(x=>x.id===id);if(!p)return P.teams();
+ const st=playerRows().find(r=>r.id===id)||{gp:0,g:0,a:0,ga:0,y:0,r:0,pm:0,cs:0},t=T(p.team)||{id:"",name:"Unknown team",c:"#333",short:"?"};
+ const th=t.theme?"th-"+t.theme:"",rows=[["Appearances",st.gp],["Goals",st.g],["Assists",st.a],["G+A",st.ga||st.g+st.a],...(p.pos==="GK"?[["Clean sheets",st.cs]]:[]),["Yellow cards",st.y],["Red cards",st.r],["Pens missed",st.pm]];
+ const per=st.gp?[["Goals / game",(st.g/st.gp).toFixed(2)],["G+A / game",((st.g+st.a)/st.gp).toFixed(2)]]:[];
+ return banner(p.num??p.pos,p.name,`${PLPOS[p.pos]||p.pos} · ${t.name}`,`<a href="#/teams">Teams</a> / <a href="#/team/${esc(t.id)}">${esc(t.name)}</a> / ${esc(p.name)}`,t.theme?"":t.c,th,t.badge?`<img class="tbadge" src="${esc(t.badge)}" alt="${esc(t.name)} crest">`:"")+
+ `<div class="${th?"thw "+th:""}" style="--c:${esc(t.c)}"><main class="w"><section><div class="pprof">${pAv(p,"pph big")}<div class="pinfo"><div class="pnum"><b>${p.num??"–"}</b><span class="tag">${esc(p.pos)}</span></div><h2>${esc(p.name)}</h2><p class="pbio">${esc(pBio(p,t,st))}</p><div class="pmeta"><span><small>Club</small><a href="#/team/${esc(t.id)}">${esc(t.name)}</a></span><span><small>Position</small>${esc(PLPOS[p.pos]||p.pos)}</span><span><small>Shirt</small>#${p.num??"–"}</span>${p.price?`<span><small>Fantasy price</small>${ksh(p.price)}</span>`:""}</div></div></div></section>
+ <section><div class="hd"><h2>Season stats</h2></div><div class="stats">${[...rows,...per].map(x=>`<div><b>${x[1]}</b><span>${x[0]}</span></div>`).join("")}</div></section>
+ <section><p><a class="btn o" href="#/team/${esc(t.id)}">‹ Back to ${esc(t.name)}</a></p></section></main></div>`}
 /* ---------- admin ---------- */
 const teamOpts=()=>teams().map(t=>[t.id,t.name]);
 const sel=(k,o,x)=>`<select data-k="${k}">${o.map(([i,n])=>`<option value="${esc(i)}" ${x===i?"selected":""}>${esc(n)}</option>`).join("")}</select>`;
@@ -779,7 +766,7 @@ const FORMS={
   def:()=>({tag:"News",color:"#ff5a1f",date:new Date().toISOString().slice(0,10)}),src:newsList,lab:n=>n.title,chk:v=>v.title?"":"Add a title.",id:v=>(v.title.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,40)||"post")+"-"+Date.now().toString(36).slice(-4)},
  teams:{col:"teams",one:"team",f:[["name","Team name","text"],["short","Short name (3 letters)","text"],["c","Colour","color"],["manager","Manager","text"],["ground","Home ground","text"],["ord","Table order (0 first)","num"],["badge","Badge image (URL or /badges/name.png)","text"],["icon","Small icon for tables (optional)","text"],["theme","Card style","sel",[["","Standard"],["civo","Civo: black and gold"],["avenue","2nd Avenue: black and white"],["baraka","Baraka: gold and black"],["samba","Samba Boys: monochrome"],["elland","Elland: red and gold"],["mandem","Mandem: street black"]]],["bio","About the team","area"]],
   def:()=>({c:"#1971c2",ground:V,ord:D.teams.length}),src:teams,lab:t=>t.name,chk:v=>!v.name?"Add a team name.":!v.short?"Add a short name.":"",id:v=>rid("t")},
- players:{col:"players",one:"player",f:[["team","Team","team"],["name","Player name","text"],["num","Shirt number (0-99)","num"],["pos","Position","sel",POS.map(([k,l])=>[k,l.replace(/s$/,"")])],["price","Fantasy price (KSh)","num",100000],["photo","Photo URL (relative to public/)","text"]],
+ players:{col:"players",one:"player",f:[["team","Team","team"],["name","Player name","text"],["num","Shirt number (0-99)","num"],["pos","Position","sel",POS.map(([k,l])=>[k,l.replace(/s$/,"")])],["price","Fantasy price (KSh)","num",100000],["photo","Photo URL (e.g. /players/name.jpg)","text"],["bio","Short description (optional)","area"]],
   def:()=>({team:PT||teams()[0]?.id,pos:"MID",price:5000,photo:""}),src:()=>D.players.filter(p=>p.team===PT).sort((a,b)=>(a.num??999)-(b.num??999)),lab:p=>`${p.num??"–"}  ${p.name} (${p.pos}) · KSh ${(p.price||0).toLocaleString("en-KE")}`,
   chk:v=>!v.team?"Pick a team.":!v.name?"Add the player's name.":v.num!==null&&v.num>99?"Shirt numbers run 0 to 99.":v.num!==null&&D.players.some(p=>p.team===v.team&&p.num===v.num&&p.id!==EID)?"That shirt number is already taken in this team.":"",id:v=>rid("p")}};
 FORMS.glory={col:"glory",one:"past winner",f:[["season","Season (e.g. 2025/26)","text"],["champion","Champion","teamx"],["champion_name","Champion name (if not a current team)","text"],["runner_up","Runners-up","text"],["top_scorer","Top scorer","text"],["note","Note (optional)","text"]],
@@ -840,7 +827,7 @@ function after(r){
   else{document.querySelectorAll("#at button[data-k]").forEach(b=>b.onclick=()=>{AT=b.dataset.k;document.querySelectorAll("#at button[data-k]").forEach(x=>x.setAttribute("aria-selected",x===b));adminTab()});
    if($("#so"))$("#so").onclick=()=>{setTok(null);route(false)};adminTab()}}}
 function route(vt=true){const [r,a]=(location.hash.replace(/^#\/?/,"")||"home").split("/");
- const html=MODE==="error"&&r!=="admin"?P.down():r==="news"&&a?P.article(a):r==="team"?P.team(a):(P[r]||P.home)(a);const key=r==="team"?"teams":r;
+ const html=MODE==="error"&&r!=="admin"?P.down():r==="news"&&a?P.article(a):r==="team"?P.team(a):r==="player"?player(a):(P[r]||P.home)(a);const key=r==="team"||r==="player"?"teams":r;
  const apply=()=>{const y=scrollY;$("#app").innerHTML=html;document.querySelectorAll("#nv a").forEach(x=>x.classList.toggle("on",x.dataset.r===key));scrollTo(0,vt?0:y);after(r);
   document.querySelectorAll("tr[data-go]").forEach(tr=>tr.onclick=()=>location.hash=tr.dataset.go)};
  if(vt&&document.startViewTransition&&!rm)document.startViewTransition(apply);else{if(vt)document.documentElement.classList.add("novt");apply()}}
