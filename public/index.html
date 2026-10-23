@@ -345,7 +345,7 @@ footer a{color:#fff;margin-right:16px;font-weight:700}
 @media(prefers-reduced-motion:reduce){.ribbon div{animation:none}::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}.novt #app{animation:none}}
 .pph{flex:none;width:56px;height:56px;border-radius:50%;overflow:hidden;background:var(--bg);border:2px solid var(--c);display:grid;place-items:center}
 .pph img{width:100%;height:100%;object-fit:cover}.pph.none i{font:900 22px/1 "Big Shoulders Display",sans-serif;font-style:normal;color:var(--c);opacity:.7}
-.pl:has(.pph)>b{display:none}.pl{transition:transform .15s,box-shadow .15s}.pl:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.18)}
+.pl{transition:transform .15s,box-shadow .15s}.pl:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.18)}
 .pprof{display:grid;grid-template-columns:minmax(200px,300px) 1fr;gap:28px;align-items:center;background:var(--card);border:1px solid var(--line);border-left:6px solid var(--c);border-radius:16px;padding:22px}
 .pph.big{width:100%;height:auto;aspect-ratio:4/5;border-radius:14px;border-width:3px}.pph.big.none i{font-size:120px}
 .pnum{display:flex;align-items:center;gap:12px}.pnum b{font:900 64px/1 "Big Shoulders Display",sans-serif;color:var(--c)}.pnum .tag{background:var(--c)}
@@ -466,7 +466,7 @@ const count=id=>D.players.filter(p=>p.team===id).length;
 const teamCard=t=>`<a class="tc ${t.theme?"th-"+esc(t.theme):""}" href="#/team/${esc(t.id)}" style="--c:${esc(t.c)}" data-s="${esc(t.short)}">${t.badge?`<img class="cb" src="${esc(t.badge)}" alt="">`:`<span class="cr">${esc((t.short||"?")[0])}</span>`}<div><h3>${esc(t.name)}</h3><small>${count(t.id)?count(t.id)+" players":"View team"}</small></div></a>`;
 const POS=[["GK","Goalkeepers"],["DEF","Defenders"],["MID","Midfielders"],["FWD","Forwards"]];
 const squad=t=>{const st=Object.fromEntries(playerRows().map(r=>[r.id,r])),ps=D.players.filter(p=>p.team===t.id);if(!ps.length)return '<p class="hint">Squad coming soon.</p>';
- return POS.map(([k,l])=>{const g=ps.filter(p=>p.pos===k).sort((a,b)=>(a.num??999)-(b.num??999));return g.length?`<div class="day">${l}</div><div class="squad" style="--c:${esc(t.c)}">${g.map(p=>`<a class="pl" href="#/player/${esc(p.id)}">${pAv(p)}<b>${p.num??"–"}</b><div><strong>${esc(p.name)}</strong><span class="tag">${k}</span>${chip(st[p.id])}</div></a>`).join("")}</div>`:""}).join("")};
+ return POS.map(([k,l])=>{const g=ps.filter(p=>p.pos===k).sort((a,b)=>(a.num??999)-(b.num??999));return g.length?`<div class="day">${l}</div><div class="squad" style="--c:${esc(t.c)}">${g.map(p=>`<a class="pl" href="#/player/${esc(p.id)}"><b>${p.num??"–"}</b><div><strong>${esc(p.name)}</strong><span class="tag">${k}</span>${chip(st[p.id])}</div></a>`).join("")}</div>`:""}).join("")};
 
 /* ---------- gameweeks ---------- */
 const dateList=()=>[...new Set(D.fixtures.map(f=>f.date))].sort();
