@@ -361,6 +361,11 @@ footer a{color:#fff;margin-right:16px;font-weight:700}
 .thw.th-civo .pph.none i{background:linear-gradient(180deg,#f6e2a0,#d4a64a 60%,#a77a24);-webkit-background-clip:text;background-clip:text;color:transparent;opacity:1}
 .thw.th-avenue .pph.none i{color:#fff}.thw.th-baraka .pph.none i{color:#edbc3f}.thw.th-samba .pph.none i{color:#0b0b0c}.thw.th-elland .pph.none i{color:#e30000}.thw.th-mandem .pph.none i{color:#fff;font-style:italic}
 .thw.th-baraka .pnum b{color:#edbc3f}.thw.th-samba .pnum b{color:#0b0b0c}.thw.th-elland .pnum b{color:#e30000}.thw.th-mandem .pnum b{color:#fff;font-style:italic}
+/* player page: size the crest to fit inside the banner so it is never cropped */
+.pb.pbp{min-height:240px}
+header.pb.pbp img.tbadge{box-sizing:border-box;width:auto;height:clamp(120px,16vw,190px);max-width:40vw;object-fit:contain}
+header.pb.pbp.th-baraka img.tbadge{aspect-ratio:1;padding:16px}
+@media(min-width:701px){.pb.pbp{min-height:300px}.pb.pbp.pbp:has(.tbadge) .w{padding-right:clamp(170px,24vw,260px)}}
 </style>
 </head>
 <body>
@@ -757,7 +762,7 @@ function player(id){const p=D.players.find(x=>x.id===id);if(!p)return P.teams();
  const st=playerRows().find(r=>r.id===id)||{gp:0,g:0,a:0,ga:0,y:0,r:0,pm:0,cs:0},t=T(p.team)||{id:"",name:"Unknown team",c:"#333",short:"?"};
  const th=t.theme?"th-"+t.theme:"",rows=[["Appearances",st.gp],["Goals",st.g],["Assists",st.a],["G+A",st.ga||st.g+st.a],...(p.pos==="GK"?[["Clean sheets",st.cs]]:[]),["Yellow cards",st.y],["Red cards",st.r],["Pens missed",st.pm]];
  const per=st.gp?[["Goals / game",(st.g/st.gp).toFixed(2)],["G+A / game",((st.g+st.a)/st.gp).toFixed(2)]]:[];
- return banner(p.num??p.pos,p.name,`${PLPOS[p.pos]||p.pos} · ${t.name}`,`<a href="#/teams">Teams</a> / <a href="#/team/${esc(t.id)}">${esc(t.name)}</a> / ${esc(p.name)}`,t.theme?"":t.c,th,t.badge?`<img class="tbadge" src="${esc(t.badge)}" alt="${esc(t.name)} crest">`:"")+
+ return banner(p.num??p.pos,p.name,`${PLPOS[p.pos]||p.pos} · ${t.name}`,`<a href="#/teams">Teams</a> / <a href="#/team/${esc(t.id)}">${esc(t.name)}</a> / ${esc(p.name)}`,t.theme?"":t.c,th+" pbp",t.badge?`<img class="tbadge" src="${esc(t.badge)}" alt="${esc(t.name)} crest">`:"")+
  `<div class="${th?"thw "+th:""}" style="--c:${esc(t.c)}"><main class="w"><section><div class="pprof">${pAv(p,"pph big")}<div class="pinfo"><div class="pnum"><b>${p.num??"–"}</b><span class="tag">${esc(p.pos)}</span></div><h2>${esc(p.name)}</h2><p class="pbio">${esc(pBio(p,t,st))}</p><div class="pmeta"><span><small>Club</small><a href="#/team/${esc(t.id)}">${esc(t.name)}</a></span><span><small>Position</small>${esc(PLPOS[p.pos]||p.pos)}</span><span><small>Shirt</small>#${p.num??"–"}</span>${p.price?`<span><small>Fantasy price</small>${ksh(p.price)}</span>`:""}</div></div></div></section>
  <section><div class="hd"><h2>Season stats</h2></div><div class="stats">${[...rows,...per].map(x=>`<div><b>${x[1]}</b><span>${x[0]}</span></div>`).join("")}</div></section>
  <section><p><a class="btn o" href="#/team/${esc(t.id)}">‹ Back to ${esc(t.name)}</a></p></section></main></div>`}
